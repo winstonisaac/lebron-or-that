@@ -88,6 +88,7 @@ export default function App() {
 
       {screen === 'game' && currentQuestion && (
         <GameScreen
+          key={currentQuestion.id}
           question={currentQuestion}
           questionIndex={currentIndex}
           totalAnswered={totalAnswered}
