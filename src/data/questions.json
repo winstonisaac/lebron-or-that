@@ -1,0 +1,320 @@
+[
+  {
+    "id": 0,
+    "q": "iPhone",
+    "c": "tech",
+    "e": 1711615899
+  },
+  {
+    "id": 1,
+    "q": "ChatGPT",
+    "c": "tech",
+    "e": 1711581074
+  },
+  {
+    "id": 2,
+    "q": "YouTube",
+    "c": "tech",
+    "e": 1711620013
+  },
+  {
+    "id": 3,
+    "q": "Facebook",
+    "c": "tech",
+    "e": 1711617956
+  },
+  {
+    "id": 4,
+    "q": "Instagram",
+    "c": "tech",
+    "e": 1711622079
+  },
+  {
+    "id": 5,
+    "q": "TikTok",
+    "c": "tech",
+    "e": 1711577014
+  },
+  {
+    "id": 6,
+    "q": "Snapchat",
+    "c": "tech",
+    "e": 1711624113
+  },
+  {
+    "id": 7,
+    "q": "Twitter",
+    "c": "tech",
+    "e": 1711613768
+  },
+  {
+    "id": 8,
+    "q": "Spotify",
+    "c": "tech",
+    "e": 1711626051
+  },
+  {
+    "id": 9,
+    "q": "Netflix Streaming",
+    "c": "tech",
+    "e": 1711615834
+  },
+  {
+    "id": 10,
+    "q": "Google",
+    "c": "tech",
+    "e": 1711662933
+  },
+  {
+    "id": 11,
+    "q": "Amazon",
+    "c": "tech",
+    "e": 1711654764
+  },
+  {
+    "id": 12,
+    "q": "Uber",
+    "c": "tech",
+    "e": 1711628135
+  },
+  {
+    "id": 13,
+    "q": "Airbnb",
+    "c": "tech",
+    "e": 1711626110
+  },
+  {
+    "id": 14,
+    "q": "Zoom",
+    "c": "tech",
+    "e": 1711624057
+  },
+  {
+    "id": 15,
+    "q": "The Dark Knight",
+    "c": "movies",
+    "e": 1711625430
+  },
+  {
+    "id": 16,
+    "q": "Frozen",
+    "c": "movies",
+    "e": 1711635691
+  },
+  {
+    "id": 17,
+    "q": "Avatar",
+    "c": "movies",
+    "e": 1711627516
+  },
+  {
+    "id": 18,
+    "q": "Inception",
+    "c": "movies",
+    "e": 1711621361
+  },
+  {
+    "id": 19,
+    "q": "The Avengers",
+    "c": "movies",
+    "e": 1711633538
+  },
+  {
+    "id": 20,
+    "q": "Barbie",
+    "c": "movies",
+    "e": 1711582359
+  },
+  {
+    "id": 21,
+    "q": "Oppenheimer",
+    "c": "movies",
+    "e": 1711582376
+  },
+  {
+    "id": 22,
+    "q": "Interstellar",
+    "c": "movies",
+    "e": 1711629501
+  },
+  {
+    "id": 23,
+    "q": "Get Out",
+    "c": "movies",
+    "e": 1711578190
+  },
+  {
+    "id": 24,
+    "q": "Parasite",
+    "c": "movies",
+    "e": 1711574083
+  },
+  {
+    "id": 25,
+    "q": "Everything Everywhere All at Once",
+    "c": "movies",
+    "e": 1711580244
+  },
+  {
+    "id": 26,
+    "q": "Titanic",
+    "c": "movies",
+    "e": 1711668329
+  },
+  {
+    "id": 27,
+    "q": "Fortnite",
+    "c": "games",
+    "e": 1711578984
+  },
+  {
+    "id": 28,
+    "q": "GTA V",
+    "c": "games",
+    "e": 1711636327
+  },
+  {
+    "id": 29,
+    "q": "Minecraft",
+    "c": "games",
+    "e": 1711624034
+  },
+  {
+    "id": 30,
+    "q": "Nintendo Wii",
+    "c": "games",
+    "e": 1711613793
+  },
+  {
+    "id": 31,
+    "q": "Call of Duty: Modern Warfare",
+    "c": "games",
+    "e": 1711615868
+  },
+  {
+    "id": 32,
+    "q": "Roblox",
+    "c": "games",
+    "e": 1711613819
+  },
+  {
+    "id": 33,
+    "q": "Among Us",
+    "c": "games",
+    "e": 1711572854
+  },
+  {
+    "id": 34,
+    "q": "Wordle",
+    "c": "games",
+    "e": 1711587189
+  },
+  {
+    "id": 35,
+    "q": "Candy Crush",
+    "c": "games",
+    "e": 1711634288
+  },
+  {
+    "id": 36,
+    "q": "Pokemon Go",
+    "c": "games",
+    "e": 1711576847
+  },
+  {
+    "id": 37,
+    "q": "9/11 Attacks",
+    "c": "events",
+    "e": 1711611140
+  },
+  {
+    "id": 38,
+    "q": "COVID-19 Pandemic",
+    "c": "events",
+    "e": 1711584533
+  },
+  {
+    "id": 39,
+    "q": "Obama First Elected",
+    "c": "events",
+    "e": 1711625506
+  },
+  {
+    "id": 40,
+    "q": "Pluto Demoted",
+    "c": "events",
+    "e": 1711613235
+  },
+  {
+    "id": 41,
+    "q": "London Olympics",
+    "c": "events",
+    "e": 1711631040
+  },
+  {
+    "id": 42,
+    "q": "Bin Laden Killed",
+    "c": "events",
+    "e": 1711620817
+  },
+  {
+    "id": 43,
+    "q": "Brexit Vote",
+    "c": "events",
+    "e": 1711573758
+  },
+  {
+    "id": 44,
+    "q": "Trump Elected",
+    "c": "events",
+    "e": 1711573647
+  },
+  {
+    "id": 45,
+    "q": "Drake Hotline Bling",
+    "c": "culture",
+    "e": 1711629230
+  },
+  {
+    "id": 46,
+    "q": "Adele Hello",
+    "c": "culture",
+    "e": 1711629241
+  },
+  {
+    "id": 47,
+    "q": "Beyonce Lemonade",
+    "c": "culture",
+    "e": 1711573824
+  },
+  {
+    "id": 48,
+    "q": "Old Town Road",
+    "c": "culture",
+    "e": 1711571819
+  },
+  {
+    "id": 49,
+    "q": "Squid Game",
+    "c": "culture",
+    "e": 1711584114
+  },
+  {
+    "id": 50,
+    "q": "Tiger King",
+    "c": "culture",
+    "e": 1711581981
+  },
+  {
+    "id": 51,
+    "q": "Gangnam Style",
+    "c": "culture",
+    "e": 1711631140
+  },
+  {
+    "id": 52,
+    "q": "Harlem Shake",
+    "c": "culture",
+    "e": 1711632591
+  }
+]

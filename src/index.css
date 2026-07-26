@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sixers-navy: #002B5C;
+  --color-sixers-blue: #006BB6;
+  --color-sixers-red: #ED174C;
+  --color-sixers-silver: #C4CED4;
+  --color-sixers-white: #FFFFFF;
+}
+
+body {
+  background-color: #002B5C;
+  color: #FFFFFF;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(237, 23, 76, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(237, 23, 76, 0.6); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
+}
