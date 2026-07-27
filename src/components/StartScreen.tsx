@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import SettingsModal from './SettingsModal';
 
 interface StartScreenProps {
@@ -10,11 +10,42 @@ interface StartScreenProps {
 
 export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChange }: StartScreenProps) {
   const [showSettings, setShowSettings] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const el = imgRef.current;
+    if (!el) return;
+
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      el.style.transform = `perspective(500px) rotateX(${-dy * 8}deg) rotateY(${dx * 8}deg)`;
+    };
+
+    const onLeave = () => {
+      el.style.transform = 'perspective(500px) rotateX(0deg) rotateY(0deg)';
+    };
+
+    window.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      if (el) el.removeEventListener('mouseleave', onLeave);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <div className="text-center animate-slide-up">
-        <img src="/lebron-main.png" className="h-28 mx-auto mb-4" />
+        <img
+          ref={imgRef}
+          src="/lebron-main.png"
+          className="h-28 mx-auto mb-4 transition-transform duration-150 ease-out"
+          style={{ transform: 'perspective(500px) rotateX(0deg) rotateY(0deg)' }}
+        />
         <h1 className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight">
           <span className="text-sixers-red">LeBron</span>{' '}
           <span className="text-white">or</span>{' '}

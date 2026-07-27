@@ -1,4 +1,4 @@
-export type Category = 'tech' | 'movies' | 'games' | 'events' | 'culture' | 'tv' | 'music' | 'books' | 'nba';
+export type Category = 'tech' | 'movies' | 'games' | 'events' | 'culture' | 'tv' | 'music' | 'nba';
 
 export const CATEGORY_EMOJI: Record<Category, string> = {
   tech: '💻',
@@ -8,7 +8,6 @@ export const CATEGORY_EMOJI: Record<Category, string> = {
   culture: '🎵',
   tv: '📺',
   music: '🎧',
-  books: '📚',
   nba: '🏀',
 };
 
@@ -20,6 +19,5 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   culture: 'Pop Culture',
   tv: 'TV',
   music: 'Music',
-  books: 'Books',
   nba: 'NBA',
 };
