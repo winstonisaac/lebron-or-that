@@ -127,7 +127,7 @@
   },
   {
     "id": 21,
-    "q": "Traffic",
+    "q": "Memento",
     "c": "movies",
     "e": 1711609000
   },
@@ -2227,9 +2227,9 @@
   },
   {
     "id": 371,
-    "q": "Wi-Fi 802.11b standard ratified",
+    "q": "iPod Shuffle released",
     "c": "tech",
-    "e": 1711662516
+    "e": 1711617460
   },
   {
     "id": 372,
@@ -4195,9 +4195,9 @@
   },
   {
     "id": 699,
-    "q": "Google Nexus One phone",
+    "q": "Flappy Bird released",
     "c": "tech",
-    "e": 1711614652
+    "e": 1711628988
   },
   {
     "id": 700,
@@ -4243,15 +4243,15 @@
   },
   {
     "id": 707,
-    "q": "Oculus Rift Kickstarter",
+    "q": "Oculus Quest launched",
     "c": "tech",
-    "e": 1711626852
+    "e": 1711567460
   },
   {
     "id": 708,
-    "q": "Coursera online courses launched",
+    "q": "Glassdoor launched",
     "c": "tech",
-    "e": 1711626879
+    "e": 1711608447
   },
   {
     "id": 709,

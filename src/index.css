@@ -14,6 +14,7 @@
   --color-sixers-red: #ED174C;
   --color-sixers-silver: #C4CED4;
   --color-sixers-white: #FFFFFF;
+  --color-title-accent: #ED174C;
 }
 
 [data-theme="cavaliers"] {
@@ -22,6 +23,7 @@
   --color-sixers-red: #E31837;
   --color-sixers-silver: #C4CED4;
   --color-sixers-white: #FFFFFF;
+  --color-title-accent: #FFB81C;
 }
 
 [data-theme="lakers"] {
