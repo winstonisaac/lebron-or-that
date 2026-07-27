@@ -25,10 +25,12 @@ export default function GameScreen({
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | 'timeout' | null>(null);
   const [answered, setAnswered] = useState(false);
   const [shake, setShake] = useState(false);
+  const [swipeDir, setSwipeDir] = useState<'left' | 'right' | null>(null);
 
   const handleAnswer = useCallback(
     (playerSaysOlder: boolean) => {
       if (answered) return;
+      setSwipeDir(playerSaysOlder ? 'left' : 'right');
       setAnswered(true);
       const isOlderThanLeBron = question.year < 2003;
       const correct = playerSaysOlder === isOlderThanLeBron;
@@ -106,7 +108,13 @@ export default function GameScreen({
 
         <Timer timeLeft={timeLeft} maxTime={TIMER_SECONDS} />
 
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mt-6 text-center">
+        <div className={`bg-white/5 border border-white/10 rounded-2xl p-8 mt-6 text-center transition-all duration-500 ${
+          swipeDir === 'left'
+            ? '-translate-x-[200%] -rotate-[12deg] opacity-0'
+            : swipeDir === 'right'
+            ? 'translate-x-[200%] rotate-[12deg] opacity-0'
+            : ''
+        }`}>
           <div className="text-4xl mb-3">
             {CATEGORY_EMOJI[question.category as Category]}
           </div>

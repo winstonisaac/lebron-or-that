@@ -144,6 +144,15 @@ export default function App() {
       {showTutorial && (
         <TutorialModal onStart={() => { setShowTutorial(false); startGame(); }} />
       )}
+
+      <a
+        href="https://winstonisaac.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-2 left-0 right-0 text-center text-xs text-sixers-silver/30 hover:text-sixers-silver/60 transition-colors z-40"
+      >
+        vibe coded by Winston Isaac
+      </a>
     </div>
   );
 }

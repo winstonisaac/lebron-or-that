@@ -72,14 +72,19 @@ export default function ResultScreen({
   };
 
   const streakEmoji =
-    streak >= 15 ? '👑' : streak >= 10 ? '🏀' : streak >= 5 ? '🔥' : '💪';
+    streak === 0 ? '😂'
+    : streak <= 5 ? '🤷'
+    : streak <= 9 ? '💪'
+    : streak <= 14 ? '🔥'
+    : streak <= 29 ? '👑'
+    : '🐐';
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <div className="text-center animate-slide-up">
         <div className="text-6xl mb-4">{streakEmoji}</div>
         <h2 className="text-4xl md:text-5xl font-extrabold mb-2">
-          Streak: <span className="text-sixers-red">{streak}</span>
+          Score: <span className="text-sixers-red">{streak}</span>
         </h2>
         <p className="text-sixers-silver text-lg mb-8">
           You got {totalAnswered - 1} right before getting knocked out!

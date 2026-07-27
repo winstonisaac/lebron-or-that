@@ -22,20 +22,20 @@ export default function TutorialModal({ onStart }: TutorialModalProps) {
         </h2>
 
         <p className="text-sixers-silver text-sm leading-relaxed mb-4">
-          Did LeBron's NBA debut happen before or after this item?
+          LeBron James entered the NBA in 2003. Does this item come before or after his debut?
         </p>
 
         <div className="bg-white/5 rounded-xl px-4 py-3 mb-4 text-left space-y-2">
           <p className="text-sm text-sixers-silver">
-            <span className="text-sixers-blue font-bold">← Press Older</span> if the item came <span className="text-white font-medium">before</span> LeBron entered the NBA (2003).
+            <span className="text-sixers-blue font-bold">← Press Older (or A / ← key)</span> if it came <span className="text-white font-medium">before</span> 2003.
           </p>
           <p className="text-sm text-sixers-silver">
-            <span className="text-sixers-red font-bold">→ Press Younger</span> if it came <span className="text-white font-medium">after</span>.
+            <span className="text-sixers-red font-bold">→ Press Younger (or D / → key)</span> if it came <span className="text-white font-medium">after</span>.
           </p>
         </div>
 
         <p className="text-xs text-sixers-silver/60 mb-5">
-          You have 3 seconds per question. How long can your streak go?
+          You have 3 seconds per question. Use keyboard or tap to play.
         </p>
 
         <label className="flex items-center justify-center gap-2 mb-5 cursor-pointer">
