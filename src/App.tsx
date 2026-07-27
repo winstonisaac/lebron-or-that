@@ -118,7 +118,6 @@ export default function App() {
           <GameScreen
             key={currentQuestion.id}
             question={currentQuestion}
-            questionIndex={currentIndex}
             totalAnswered={totalAnswered}
             streak={streak}
             onAnswer={handleAnswer}

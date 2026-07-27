@@ -52,33 +52,25 @@ export function playWrong() {
 }
 
 export function playTick() {
-  const ctx = getCtx();
-  if (!ctx) return;
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(800, ctx.currentTime);
-  gain.gain.setValueAtTime(0.15, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
-  osc.start(ctx.currentTime);
-  osc.stop(ctx.currentTime + 0.08);
-}
-
-export function playBuzzer() {
-  const ctx = getCtx();
-  if (!ctx) return;
+  if (!_soundEnabled) return;
+  const ctx = new AudioContext();
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
   gain.connect(ctx.destination);
   osc.type = 'square';
-  osc.frequency.setValueAtTime(220, ctx.currentTime);
-  gain.gain.setValueAtTime(0.35, ctx.currentTime);
-  gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+  osc.frequency.setValueAtTime(1000, ctx.currentTime);
+  gain.gain.setValueAtTime(0.2, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
   osc.start(ctx.currentTime);
-  osc.stop(ctx.currentTime + 0.8);
+  osc.stop(ctx.currentTime + 0.06);
+}
+
+export function playBuzzer() {
+  if (!_soundEnabled) return;
+  const a = new Audio('/buzz.mp3');
+  a.volume = 0.5;
+  a.play().catch(() => {});
 }
 
 export function playTimeout() {

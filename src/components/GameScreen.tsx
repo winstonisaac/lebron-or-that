@@ -2,12 +2,10 @@ import { useState, useEffect, useCallback } from 'react';
 import type { Question } from '../App';
 import { CATEGORY_EMOJI, CATEGORY_LABELS, type Category } from '../utils/categories';
 import { useSwipe } from '../hooks/useSwipe';
-import Timer from './Timer';
 import { playCorrect, playWrong, playTick, playBuzzer } from '../utils/sounds';
 
 interface GameScreenProps {
   question: Question;
-  questionIndex: number;
   totalAnswered: number;
   streak: number;
   onAnswer: (correct: boolean) => void;
@@ -17,7 +15,6 @@ const TIMER_SECONDS = 5;
 
 export default function GameScreen({
   question,
-  questionIndex,
   streak,
   onAnswer,
 }: GameScreenProps) {
@@ -100,21 +97,34 @@ export default function GameScreen({
       {...swipeHandlers}
     >
       <div className="w-full max-w-md">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sixers-silver/60 text-sm">#{questionIndex + 1}</span>
-          <span className="text-sixers-silver/60 text-sm">
-            Score:{' '}
+        <div className="flex justify-between items-start mb-2">
+          <div className="flex flex-col items-center">
             <span
-              className="font-bold"
+              className="text-3xl font-bold tracking-[0.2em]"
               style={{
-                fontFamily: "'DSEG7 Classic', monospace",
+                fontFamily: "'LED Font', monospace",
                 color: '#ED174C',
-                fontSize: '1.2em',
               }}
             >
               {String(streak).padStart(2, '0')}
             </span>
-          </span>
+            <span className="text-sixers-silver/50 text-xs uppercase tracking-wider mt-0.5">score</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span
+              className={`text-3xl font-bold tracking-[0.2em] ${timeLeft <= 2 ? 'animate-pulse' : ''}`}
+              style={{
+                fontFamily: "'LED Font', monospace",
+                color: timeLeft <= 2 ? '#FF4444' : '#FF6600',
+                textShadow: timeLeft <= 2
+                  ? '0 0 12px rgba(255,68,68,0.8), 0 0 30px rgba(255,68,68,0.4)'
+                  : '0 0 8px rgba(255,102,0,0.6), 0 0 20px rgba(255,102,0,0.3)',
+              }}
+            >
+              {String(timeLeft).padStart(2, '0')}
+            </span>
+            <span className="text-sixers-silver/50 text-xs uppercase tracking-wider mt-0.5">timer</span>
+          </div>
         </div>
 
         {streakLabel && (
@@ -122,8 +132,6 @@ export default function GameScreen({
             {streakLabel}
           </div>
         )}
-
-        <Timer timeLeft={timeLeft} />
 
         <div className={`bg-white/5 border border-white/10 rounded-2xl p-8 mt-6 text-center transition-all duration-500 ${
           swipeDir === 'left'
