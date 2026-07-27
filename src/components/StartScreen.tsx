@@ -24,7 +24,7 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
           Did LeBron's NBA debut come first or that?
         </p>
         <p className="text-sixers-silver/60 text-sm mb-10">
-          LeBron started his NBA career in 2003. Are these things younger or older than his career?
+          LeBron started his NBA career in 2003. Are these things older or younger than his career?
         </p>
 
         <button
@@ -47,10 +47,6 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
           >
             ⚙️ Settings
           </button>
-        </div>
-
-        <div className="mt-8 text-sixers-silver/40 text-xs">
-          ← Older &nbsp;|&nbsp; Younger →
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface TutorialModalProps {
   onStart: () => void;
@@ -6,6 +6,11 @@ interface TutorialModalProps {
 
 export default function TutorialModal({ onStart }: TutorialModalProps) {
   const [dontShow, setDontShow] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia('(pointer: coarse)').matches);
+  }, []);
 
   const handleStart = () => {
     if (dontShow) localStorage.setItem('lebron-tutorial-seen', 'true');
@@ -27,15 +32,15 @@ export default function TutorialModal({ onStart }: TutorialModalProps) {
 
         <div className="bg-white/5 rounded-xl px-4 py-3 mb-4 text-left space-y-2">
           <p className="text-sm text-sixers-silver">
-            <span className="text-sixers-blue font-bold">← Press Older (or A / ← key)</span> if it came <span className="text-white font-medium">before</span> 2003.
+            <span className="text-sixers-blue font-bold">{isMobile ? 'Press ← Older button (or swipe left)' : 'Press ← Older button (or ← key)'}</span> if it came <span className="text-white font-medium">before</span> 2003.
           </p>
           <p className="text-sm text-sixers-silver">
-            <span className="text-sixers-red font-bold">→ Press Younger (or D / → key)</span> if it came <span className="text-white font-medium">after</span>.
+            <span className="text-sixers-red font-bold">{isMobile ? 'Press → Younger button (or swipe right)' : 'Press → Younger button (or → key)'}</span> if it came <span className="text-white font-medium">after</span> 2003.
           </p>
         </div>
 
         <p className="text-xs text-sixers-silver/60 mb-5">
-          You have 3 seconds per question. Use keyboard or tap to play.
+          You have 3 seconds per question. {isMobile ? 'Swipe or click the buttons to play.' : 'Use keyboard or click the buttons to play.'}
         </p>
 
         <label className="flex items-center justify-center gap-2 mb-5 cursor-pointer">

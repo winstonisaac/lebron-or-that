@@ -103,7 +103,7 @@ export default function App() {
   const currentQuestion = questions[currentIndex];
 
   return (
-    <div className="min-h-screen bg-sixers-navy flex justify-center">
+    <div className="min-h-screen bg-sixers-navy flex justify-center relative">
       <div className="w-full max-w-[700px]">
         {screen === 'start' && (
           <StartScreen
@@ -149,9 +149,9 @@ export default function App() {
         href="https://winstonisaac.com"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-2 left-0 right-0 text-center text-xs text-sixers-silver/30 hover:text-sixers-silver/60 transition-colors z-40"
+        className="absolute bottom-2 left-0 right-0 text-center text-xs text-sixers-silver/30 hover:text-sixers-silver/60 transition-colors"
       >
-        vibe coded by Winston Isaac
+        vibe coded by Winston
       </a>
     </div>
   );

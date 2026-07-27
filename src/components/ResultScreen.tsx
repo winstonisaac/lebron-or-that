@@ -122,7 +122,7 @@ export default function ResultScreen({
               <p className="text-sixers-silver/60 text-sm">Loading leaderboard...</p>
             ) : (
               <>
-                {userRank <= 20 && (
+                {userRank > 0 && userRank <= 20 && (
                   <p className="text-green-400 font-bold text-lg mb-3 animate-slide-up">✨ You're Top {userRank}!</p>
                 )}
                 <div className="space-y-1.5 text-left">
