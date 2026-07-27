@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { isSoundEnabled, toggleSound } from '../utils/sounds';
 
 interface SettingsModalProps {
@@ -14,7 +15,12 @@ const THEMES = [
 ] as const;
 
 export default function SettingsModal({ theme, onThemeChange, onClose }: SettingsModalProps) {
-  const soundOn = isSoundEnabled();
+  const [soundOn, setSoundOn] = useState(isSoundEnabled());
+
+  const handleToggle = () => {
+    toggleSound();
+    setSoundOn(isSoundEnabled());
+  };
 
   return (
     <div
@@ -33,7 +39,7 @@ export default function SettingsModal({ theme, onThemeChange, onClose }: Setting
         <div className="mb-6">
           <h3 className="text-sm uppercase tracking-wider text-sixers-silver/60 mb-3">Sound</h3>
           <button
-            onClick={toggleSound}
+            onClick={handleToggle}
             className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-colors ${
               soundOn ? 'bg-white/10 border-white/20' : 'bg-white/5 border-white/10'
             }`}

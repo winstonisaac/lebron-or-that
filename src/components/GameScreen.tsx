@@ -3,7 +3,7 @@ import type { Question } from '../App';
 import { CATEGORY_EMOJI, CATEGORY_LABELS, type Category } from '../utils/categories';
 import { useSwipe } from '../hooks/useSwipe';
 import Timer from './Timer';
-import { playCorrect, playWrong, playTimeout } from '../utils/sounds';
+import { playCorrect, playWrong, playTick, playBuzzer } from '../utils/sounds';
 
 interface GameScreenProps {
   question: Question;
@@ -13,7 +13,7 @@ interface GameScreenProps {
   onAnswer: (correct: boolean) => void;
 }
 
-const TIMER_SECONDS = 3;
+const TIMER_SECONDS = 5;
 
 export default function GameScreen({
   question,
@@ -53,7 +53,7 @@ export default function GameScreen({
     if (answered) return;
     if (timeLeft <= 0) {
       setAnswered(true);
-      playTimeout();
+      playBuzzer();
       setFeedback('timeout');
       setTimeout(() => {
         onAnswer(false);
@@ -63,6 +63,11 @@ export default function GameScreen({
     const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000);
     return () => clearTimeout(timer);
   }, [timeLeft, answered, onAnswer]);
+
+  useEffect(() => {
+    if (answered || timeLeft <= 0) return;
+    playTick();
+  }, [timeLeft, answered]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -79,13 +84,15 @@ export default function GameScreen({
   );
 
   const streakLabel =
-    streak >= 15
-      ? '👑 The King!'
-      : streak >= 10
-        ? '🏀 LeBron Mode!'
-        : streak >= 5
-          ? '🔥 On Fire!'
-          : '';
+    streak >= 30
+      ? '🐐 The GOAT!'
+      : streak >= 15
+        ? '👑 The King!'
+        : streak >= 10
+          ? '🏀 LeBron Mode!'
+          : streak >= 5
+            ? '🔥 On Fire!'
+            : '';
 
   return (
     <div
@@ -96,7 +103,17 @@ export default function GameScreen({
         <div className="flex justify-between items-center mb-2">
           <span className="text-sixers-silver/60 text-sm">#{questionIndex + 1}</span>
           <span className="text-sixers-silver/60 text-sm">
-            Streak: <span className="text-white font-bold">{streak}</span>
+            Score:{' '}
+            <span
+              className="font-bold"
+              style={{
+                fontFamily: "'DSEG7 Classic', monospace",
+                color: '#ED174C',
+                fontSize: '1.2em',
+              }}
+            >
+              {String(streak).padStart(2, '0')}
+            </span>
           </span>
         </div>
 
@@ -106,7 +123,7 @@ export default function GameScreen({
           </div>
         )}
 
-        <Timer timeLeft={timeLeft} maxTime={TIMER_SECONDS} />
+        <Timer timeLeft={timeLeft} />
 
         <div className={`bg-white/5 border border-white/10 rounded-2xl p-8 mt-6 text-center transition-all duration-500 ${
           swipeDir === 'left'

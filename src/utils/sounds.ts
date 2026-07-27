@@ -51,6 +51,36 @@ export function playWrong() {
   osc.stop(ctx.currentTime + 0.4);
 }
 
+export function playTick() {
+  const ctx = getCtx();
+  if (!ctx) return;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(800, ctx.currentTime);
+  gain.gain.setValueAtTime(0.15, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.08);
+}
+
+export function playBuzzer() {
+  const ctx = getCtx();
+  if (!ctx) return;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(220, ctx.currentTime);
+  gain.gain.setValueAtTime(0.35, ctx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.8);
+}
+
 export function playTimeout() {
   const ctx = getCtx();
   if (!ctx) return;

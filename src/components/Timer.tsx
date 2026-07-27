@@ -1,21 +1,24 @@
 interface TimerProps {
   timeLeft: number;
-  maxTime: number;
 }
 
-export default function Timer({ timeLeft, maxTime }: TimerProps) {
-  const pct = (timeLeft / maxTime) * 100;
-  const color = pct > 50 ? '#006BB6' : pct > 25 ? '#ED174C' : '#FF4444';
+export default function Timer({ timeLeft }: TimerProps) {
+  const urgent = timeLeft <= 2;
 
   return (
-    <div className="w-full h-3 bg-sixers-navy/50 rounded-full overflow-hidden border border-white/10">
-      <div
-        className="h-full rounded-full transition-all duration-100 ease-linear"
+    <div className={`rounded-lg px-4 py-2 text-center border ${urgent ? 'bg-red-900/30 border-red-500/40' : 'bg-black/40 border-white/10'}`}>
+      <span
+        className="text-5xl font-bold tracking-[0.2em]"
         style={{
-          width: `${pct}%`,
-          backgroundColor: color,
+          fontFamily: "'DSEG7 Classic', monospace",
+          color: urgent ? '#FF4444' : '#FF6600',
+          textShadow: urgent
+            ? '0 0 12px rgba(255,68,68,0.8), 0 0 30px rgba(255,68,68,0.4)'
+            : '0 0 8px rgba(255,102,0,0.6), 0 0 20px rgba(255,102,0,0.3)',
         }}
-      />
+      >
+        {String(timeLeft).padStart(2, '0')}
+      </span>
     </div>
   );
 }
