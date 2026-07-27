@@ -61,7 +61,7 @@ export default function Leaderboard({ onBack }: LeaderboardProps) {
                   </span>
                   <span className="text-white font-medium">{entry.player_name}</span>
                 </div>
-                <span className="text-sixers-red font-bold text-lg">
+                <span className="text-sixers-blue font-bold text-lg">
                   {entry.streak}
                 </span>
               </div>
@@ -69,7 +69,7 @@ export default function Leaderboard({ onBack }: LeaderboardProps) {
           </div>
         )}
 
-        <div className="text-center mt-10">
+        <div className="text-center mt-10 mb-10">
           <button
             onClick={onBack}
             className="text-sixers-blue hover:text-blue-400 font-bold text-lg underline transition-colors"

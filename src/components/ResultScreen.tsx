@@ -140,7 +140,7 @@ export default function ResultScreen({
                         <span className="text-white/80">
                           {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`} {entry.player_name}
                         </span>
-                        <span className="text-sixers-red font-bold">{entry.streak}</span>
+                        <span className="text-sixers-blue font-bold">{entry.streak}</span>
                       </div>
                     );
                   })}
@@ -148,7 +148,7 @@ export default function ResultScreen({
                 {userRank > 20 && (
                   <div className="mt-4 flex justify-between items-center px-4 py-3 rounded-xl bg-sixers-blue/20 border border-sixers-blue/40 scale-105 shadow-lg">
                     <span className="text-white font-semibold text-base">#{userRank}: {name.trim()}</span>
-                    <span className="text-sixers-red font-bold text-lg">{streak}</span>
+                    <span className="text-sixers-blue font-bold text-lg">{streak}</span>
                   </div>
                 )}
               </>
