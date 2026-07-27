@@ -18,7 +18,7 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
         <h1 className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight">
           <span className="text-sixers-red">LeBron</span>{' '}
           <span className="text-white">or</span>{' '}
-          <span className="text-sixers-blue">That</span>
+          <span className="text-sixers-red">That</span>
         </h1>
         <p className="text-sixers-silver text-lg md:text-xl mb-2">
           Did LeBron's NBA debut come first or that?

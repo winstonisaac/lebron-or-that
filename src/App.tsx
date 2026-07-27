@@ -39,6 +39,7 @@ type Theme = typeof THEMES[number];
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('start');
+  const [prevScreen, setPrevScreen] = useState<Screen>('start');
   const [questions, setQuestions] = useState<Question[]>(() => getQuestions());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -97,7 +98,7 @@ export default function App() {
         {screen === 'start' && (
           <StartScreen
             onPlay={handlePlay}
-            onLeaderboard={() => setScreen('leaderboard')}
+            onLeaderboard={() => { setPrevScreen('start'); setScreen('leaderboard'); }}
             theme={theme}
             onThemeChange={setTheme}
           />
@@ -120,13 +121,13 @@ export default function App() {
             totalAnswered={totalAnswered}
             onSubmit={handleSubmitScore}
             onPlayAgain={handlePlay}
-            onLeaderboard={() => setScreen('leaderboard')}
+            onLeaderboard={() => { setPrevScreen('result'); setScreen('leaderboard'); }}
             onTitleScreen={() => setScreen('start')}
           />
         )}
 
         {screen === 'leaderboard' && (
-          <Leaderboard onBack={() => setScreen('start')} />
+          <Leaderboard onBack={() => setScreen(prevScreen)} />
         )}
       </div>
     </div>

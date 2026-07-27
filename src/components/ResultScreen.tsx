@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '../supabase/client';
 
 const BLOCKLIST = [
   'fuck', 'shit', 'bitch', 'damn', 'crap',
@@ -13,6 +14,8 @@ function hasProfanity(name: string): boolean {
   const lower = name.toLowerCase();
   return BLOCKLIST.some(word => lower.includes(word));
 }
+
+interface LBEntry { player_name: string; streak: number; }
 
 interface ResultScreenProps {
   streak: number;
@@ -34,6 +37,29 @@ export default function ResultScreen({
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [topScores, setTopScores] = useState<LBEntry[]>([]);
+  const [userRank, setUserRank] = useState(0);
+  const [loadingLB, setLoadingLB] = useState(false);
+
+  useEffect(() => {
+    if (!submitted) return;
+    const timer = setTimeout(async () => {
+      setLoadingLB(true);
+      const { data: top } = await supabase
+        .from('leaderboard')
+        .select('player_name, streak')
+        .order('streak', { ascending: false })
+        .limit(20);
+      if (top) setTopScores(top as LBEntry[]);
+      const { count } = await supabase
+        .from('leaderboard')
+        .select('*', { count: 'exact', head: true })
+        .gte('streak', streak);
+      if (count !== null) setUserRank(count);
+      setLoadingLB(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [submitted, streak]);
 
   const handleSubmit = () => {
     const trimmed = name.trim();
@@ -59,7 +85,12 @@ export default function ResultScreen({
           You got {totalAnswered - 1} right before getting knocked out!
         </p>
 
-        {!submitted ? (
+        {streak === 0 ? (
+          <div className="mb-8">
+            <p className="text-sixers-silver text-lg">You didn't even get one right!</p>
+            <p className="text-sixers-silver/60 text-sm mt-2">Fun fact: LeBron James never scored 0 points in his NBA career.</p>
+          </div>
+        ) : !submitted ? (
           <div className="mb-8">
             <input
               type="text"
@@ -81,7 +112,42 @@ export default function ResultScreen({
             </button>
           </div>
         ) : (
-          <p className="text-green-400 mb-8">Score submitted! 🏀</p>
+          <div className="mb-8">
+            {loadingLB ? (
+              <p className="text-sixers-silver/60 text-sm">Loading leaderboard...</p>
+            ) : (
+              <>
+                {userRank <= 20 && (
+                  <p className="text-green-400 font-bold text-lg mb-3 animate-slide-up">✨ You're Top {userRank}!</p>
+                )}
+                <div className="space-y-1.5 text-left">
+                  {topScores.map((entry, i) => {
+                    const isYou = entry.player_name === name.trim() && entry.streak === streak;
+                    return (
+                      <div
+                        key={i}
+                        className={`flex justify-between px-3 py-2 rounded-lg text-sm transition-all ${
+                          isYou
+                            ? 'bg-sixers-blue/20 border border-sixers-blue/40'
+                            : 'bg-white/5'
+                        }`}
+                      >
+                        <span className="text-white/80">
+                          {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`} {entry.player_name}
+                        </span>
+                        <span className="text-sixers-red font-bold">{entry.streak}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                {userRank > 20 && (
+                  <p className="mt-3 text-sixers-silver/80 text-sm font-medium">
+                    #{userRank}: {name.trim()} ({streak})
+                  </p>
+                )}
+              </>
+            )}
+          </div>
         )}
 
         <div className="flex flex-col gap-3">

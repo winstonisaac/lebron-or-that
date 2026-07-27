@@ -22,7 +22,7 @@ export default function Leaderboard({ onBack }: LeaderboardProps) {
         .from('leaderboard')
         .select('*')
         .order('streak', { ascending: false })
-        .limit(50);
+        .limit(20);
       if (data) setEntries(data);
       setLoading(false);
     };
@@ -74,7 +74,7 @@ export default function Leaderboard({ onBack }: LeaderboardProps) {
             onClick={onBack}
             className="text-sixers-blue hover:text-blue-400 font-bold text-lg underline transition-colors"
           >
-            Back to Menu
+            Back
           </button>
         </div>
       </div>
