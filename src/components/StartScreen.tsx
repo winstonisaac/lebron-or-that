@@ -14,7 +14,7 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <div className="text-center animate-slide-up">
-        <img src="/lebron-main.svg" className="h-20 mx-auto mb-4" />
+        <img src="/lebron-main.png" className="h-28 mx-auto mb-4" />
         <h1 className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight">
           <span className="text-sixers-red">LeBron</span>{' '}
           <span className="text-white">or</span>{' '}
@@ -29,7 +29,7 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
 
         <button
           onClick={onPlay}
-          className="bg-sixers-red hover:bg-red-600 text-white font-bold text-2xl px-12 py-4 rounded-full mb-4 transition-all hover:scale-105 active:scale-95 animate-pulse-glow"
+          className="bg-sixers-red hover:bg-white hover:text-sixers-red text-white font-bold text-2xl px-12 py-4 rounded-full mb-4 transition-all hover:scale-105 active:scale-95 animate-pulse-glow"
         >
           Play
         </button>

@@ -3,6 +3,7 @@ import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
 import ResultScreen from './components/ResultScreen';
 import Leaderboard from './components/Leaderboard';
+import TutorialModal from './components/TutorialModal';
 import questionsData from './data/questions.json';
 import { decodeYear } from './utils/decode';
 
@@ -47,18 +48,27 @@ export default function App() {
   const [theme, setTheme] = useState<Theme>(() =>
     (localStorage.getItem('lebron-theme') as Theme) || 'sixers'
   );
+  const [showTutorial, setShowTutorial] = useState(false);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('lebron-theme', theme);
   }, [theme]);
 
-  const handlePlay = () => {
+  const startGame = () => {
     setQuestions(getQuestions());
     setCurrentIndex(0);
     setStreak(0);
     setTotalAnswered(0);
     setScreen('game');
+  };
+
+  const handlePlay = () => {
+    if (localStorage.getItem('lebron-tutorial-seen') === 'true') {
+      startGame();
+    } else {
+      setShowTutorial(true);
+    }
   };
 
   const handleAnswer = useCallback(
@@ -130,6 +140,10 @@ export default function App() {
           <Leaderboard onBack={() => setScreen(prevScreen)} />
         )}
       </div>
+
+      {showTutorial && (
+        <TutorialModal onStart={() => { setShowTutorial(false); startGame(); }} />
+      )}
     </div>
   );
 }

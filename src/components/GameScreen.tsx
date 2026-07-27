@@ -118,40 +118,42 @@ export default function GameScreen({
           </h2>
         </div>
 
-        {feedback && (
-          <div className="text-center mt-6 animate-slide-up">
-            {feedback === 'correct' && (
-              <div className="text-2xl font-bold text-green-400">✅ Correct!</div>
-            )}
-            {feedback === 'wrong' && (
-              <div className="text-2xl font-bold text-sixers-red">
-                ❌ Wrong! It was from {question.year}
-              </div>
-            )}
-            {feedback === 'timeout' && (
-              <div className="text-2xl font-bold text-yellow-400">
-                ⏰ Time's up! It was from {question.year}
-              </div>
-            )}
-          </div>
-        )}
+        <div className="min-h-[108px] flex flex-col justify-center mt-6">
+          {feedback && (
+            <div className="text-center animate-slide-up">
+              {feedback === 'correct' && (
+                <div className="text-2xl font-bold text-green-400">✅ Correct! That was in {question.year}!</div>
+              )}
+              {feedback === 'wrong' && (
+                <div className="text-2xl font-bold text-sixers-red">
+                  ❌ Wrong! That was in {question.year}!
+                </div>
+              )}
+              {feedback === 'timeout' && (
+                <div className="text-2xl font-bold text-yellow-400">
+                  ⏰ Time's up! That was in {question.year}!
+                </div>
+              )}
+            </div>
+          )}
 
-        {!answered && (
-          <div className="flex gap-4 mt-8">
-            <button
-              onClick={() => handleAnswer(true)}
-              className="flex-1 bg-sixers-blue hover:bg-blue-600 text-white font-bold text-xl py-5 rounded-xl transition-all hover:scale-105 active:scale-95"
-            >
-              ← Older
-            </button>
-            <button
-              onClick={() => handleAnswer(false)}
-              className="flex-1 bg-sixers-red hover:bg-red-600 text-white font-bold text-xl py-5 rounded-xl transition-all hover:scale-105 active:scale-95"
-            >
-              Younger →
-            </button>
-          </div>
-        )}
+          {!answered && (
+            <div className="flex gap-4">
+              <button
+                onClick={() => handleAnswer(true)}
+                className="flex-1 bg-sixers-blue hover:bg-white hover:text-sixers-blue text-white font-bold text-xl py-5 rounded-xl transition-all hover:scale-105 active:scale-95"
+              >
+                ← Older
+              </button>
+              <button
+                onClick={() => handleAnswer(false)}
+                className="flex-1 bg-sixers-red hover:bg-white hover:text-sixers-red text-white font-bold text-xl py-5 rounded-xl transition-all hover:scale-105 active:scale-95"
+              >
+                Younger →
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -106,7 +106,7 @@ export default function ResultScreen({
             <button
               onClick={handleSubmit}
               disabled={name.trim().length < 1}
-              className="mt-4 bg-sixers-red hover:bg-red-600 disabled:bg-white/20 disabled:text-white/40 text-white font-bold text-lg px-10 py-3 rounded-full transition-all hover:scale-105 active:scale-95"
+              className="mt-4 bg-sixers-red hover:bg-white hover:text-sixers-red disabled:bg-white/20 disabled:text-white/40 text-white font-bold text-lg px-10 py-3 rounded-full transition-all hover:scale-105 active:scale-95"
             >
               Submit Score
             </button>
@@ -153,7 +153,7 @@ export default function ResultScreen({
         <div className="flex flex-col gap-3">
           <button
             onClick={onPlayAgain}
-            className="bg-sixers-red hover:bg-red-600 text-white font-bold text-lg px-10 py-3 rounded-full transition-all hover:scale-105 active:scale-95"
+            className="bg-sixers-red hover:bg-white hover:text-sixers-red text-white font-bold text-lg px-10 py-3 rounded-full transition-all hover:scale-105 active:scale-95"
           >
             🔁 Play Again
           </button>
