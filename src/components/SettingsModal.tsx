@@ -18,11 +18,11 @@ export default function SettingsModal({ theme, onThemeChange, onClose }: Setting
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 animate-slide-up"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 animate-slide-up"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md bg-sixers-navy border border-white/10 rounded-t-3xl p-6 pb-10 animate-slide-up"
+        className="w-full max-w-md mx-4 bg-sixers-navy border border-white/10 rounded-3xl p-6 pb-10 animate-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-6">

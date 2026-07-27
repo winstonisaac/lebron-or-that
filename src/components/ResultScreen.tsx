@@ -19,6 +19,8 @@ interface ResultScreenProps {
   totalAnswered: number;
   onSubmit: (name: string) => void;
   onPlayAgain: () => void;
+  onLeaderboard: () => void;
+  onTitleScreen: () => void;
 }
 
 export default function ResultScreen({
@@ -26,6 +28,8 @@ export default function ResultScreen({
   totalAnswered,
   onSubmit,
   onPlayAgain,
+  onLeaderboard,
+  onTitleScreen,
 }: ResultScreenProps) {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -67,6 +71,7 @@ export default function ResultScreen({
               className="bg-white/10 border border-white/20 text-white text-center text-xl px-6 py-3 rounded-xl w-full max-w-xs focus:outline-none focus:border-sixers-red placeholder:text-white/30"
             />
             {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
+            <p className="text-sixers-silver/50 text-xs mt-1">12 characters max</p>
             <button
               onClick={handleSubmit}
               disabled={name.trim().length < 1}
@@ -79,13 +84,27 @@ export default function ResultScreen({
           <p className="text-green-400 mb-8">Score submitted! 🏀</p>
         )}
 
-        <div>
+        <div className="flex flex-col gap-3">
           <button
             onClick={onPlayAgain}
-            className="text-sixers-blue hover:text-blue-400 font-bold text-lg underline transition-colors"
+            className="bg-sixers-red hover:bg-red-600 text-white font-bold text-lg px-10 py-3 rounded-full transition-all hover:scale-105 active:scale-95"
           >
-            Play Again
+            🔁 Play Again
           </button>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <button
+              onClick={onLeaderboard}
+              className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+            >
+              🏆 Leaderboard
+            </button>
+            <button
+              onClick={onTitleScreen}
+              className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+            >
+              🏠 Title Screen
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@
 [data-theme="cavaliers"] {
   --color-sixers-navy: #860038;
   --color-sixers-blue: #FFB81C;
-  --color-sixers-red: #041E42;
+  --color-sixers-red: #E31837;
   --color-sixers-silver: #C4CED4;
   --color-sixers-white: #FFFFFF;
 }
@@ -19,7 +19,7 @@
 [data-theme="lakers"] {
   --color-sixers-navy: #552583;
   --color-sixers-blue: #FDB927;
-  --color-sixers-red: #552583;
+  --color-sixers-red: #FF8C00;
   --color-sixers-silver: #C4CED4;
   --color-sixers-white: #FFFFFF;
 }
@@ -27,7 +27,7 @@
 [data-theme="heat"] {
   --color-sixers-navy: #98002E;
   --color-sixers-blue: #F9A01B;
-  --color-sixers-red: #000000;
+  --color-sixers-red: #FF6B35;
   --color-sixers-silver: #C4CED4;
   --color-sixers-white: #FFFFFF;
 }

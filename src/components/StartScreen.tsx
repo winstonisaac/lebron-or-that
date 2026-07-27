@@ -14,17 +14,17 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <div className="text-center animate-slide-up">
-        <div className="text-6xl mb-4">🏀</div>
+        <img src="/lebron-main.svg" className="h-20 mx-auto mb-4" />
         <h1 className="text-5xl md:text-7xl font-extrabold mb-2 tracking-tight">
           <span className="text-sixers-red">LeBron</span>{' '}
           <span className="text-white">or</span>{' '}
           <span className="text-sixers-blue">That</span>
         </h1>
         <p className="text-sixers-silver text-lg md:text-xl mb-2">
-          Is it older or younger than LeBron's NBA career?
+          Did LeBron's NBA debut come first or that?
         </p>
         <p className="text-sixers-silver/60 text-sm mb-10">
-          LeBron entered the NBA in 2003. How long can your streak go?
+          LeBron started his NBA career in 2003. Are these things younger or older than his career?
         </p>
 
         <button
@@ -34,18 +34,18 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
           Play
         </button>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <button
             onClick={onLeaderboard}
-            className="text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+            className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
           >
-            Leaderboard
+            🏆 Leaderboard
           </button>
           <button
             onClick={() => setShowSettings(true)}
-            className="text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+            className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
           >
-            Settings
+            ⚙️ Settings
           </button>
         </div>
 

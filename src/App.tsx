@@ -43,10 +43,13 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [streak, setStreak] = useState(0);
   const [totalAnswered, setTotalAnswered] = useState(0);
-  const [theme, setTheme] = useState<Theme>('sixers');
+  const [theme, setTheme] = useState<Theme>(() =>
+    (localStorage.getItem('lebron-theme') as Theme) || 'sixers'
+  );
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    localStorage.setItem('lebron-theme', theme);
   }, [theme]);
 
   const handlePlay = () => {
@@ -90,7 +93,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-sixers-navy flex justify-center">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-[700px]">
         {screen === 'start' && (
           <StartScreen
             onPlay={handlePlay}
@@ -117,6 +120,8 @@ export default function App() {
             totalAnswered={totalAnswered}
             onSubmit={handleSubmitScore}
             onPlayAgain={handlePlay}
+            onLeaderboard={() => setScreen('leaderboard')}
+            onTitleScreen={() => setScreen('start')}
           />
         )}
 
