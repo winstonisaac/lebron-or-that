@@ -1,5 +1,19 @@
 import { useState } from 'react';
 
+const BLOCKLIST = [
+  'fuck', 'shit', 'bitch', 'damn', 'crap',
+  'dick', 'cock', 'piss', 'slut', 'whore', 'bastard',
+  'nigga', 'nigger', 'cunt', 'fag', 'retard',
+  'puta', 'nigg3r', 'n1gger', 'nigg@', 'nigg4',
+  'biatch', 'biotch', 'chingchong', 'cracker', 'negro',
+  'tite', 'titi', 'pussy', 'faggot',
+];
+
+function hasProfanity(name: string): boolean {
+  const lower = name.toLowerCase();
+  return BLOCKLIST.some(word => lower.includes(word));
+}
+
 interface ResultScreenProps {
   streak: number;
   totalAnswered: number;
@@ -15,11 +29,16 @@ export default function ResultScreen({
 }: ResultScreenProps) {
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = () => {
-    if (name.trim().length < 1) return;
+    const trimmed = name.trim();
+    if (trimmed.length < 1) return;
+    if (trimmed.length > 12) { setError('Name must be 12 characters or less'); return; }
+    if (hasProfanity(trimmed)) { setError('Name contains inappropriate language'); return; }
+    setError('');
     setSubmitted(true);
-    onSubmit(name.trim());
+    onSubmit(trimmed);
   };
 
   const streakEmoji =
@@ -42,11 +61,12 @@ export default function ResultScreen({
               type="text"
               placeholder="Enter your name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => { setName(e.target.value); setError(''); }}
               onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-              maxLength={20}
+              maxLength={12}
               className="bg-white/10 border border-white/20 text-white text-center text-xl px-6 py-3 rounded-xl w-full max-w-xs focus:outline-none focus:border-sixers-red placeholder:text-white/30"
             />
+            {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
             <button
               onClick={handleSubmit}
               disabled={name.trim().length < 1}

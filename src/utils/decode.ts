@@ -9,6 +9,10 @@ function getCategoryOffset(category: string, id: number): number {
     case 'games': return id * 3;
     case 'events': return id * 17;
     case 'culture': return id * 23;
+    case 'tv': return id * 19;
+    case 'music': return id * 29;
+    case 'books': return id * 31;
+    case 'nba': return id * 37;
     default: return id * 11;
   }
 }

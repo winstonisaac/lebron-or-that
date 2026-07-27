@@ -1,6 +1,20 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
+const BLOCKLIST = [
+  'fuck', 'shit', 'bitch', 'damn', 'crap',
+  'dick', 'cock', 'piss', 'slut', 'whore', 'bastard',
+  'nigga', 'nigger', 'cunt', 'fag', 'retard',
+  'puta', 'nigg3r', 'n1gger', 'nigg@', 'nigg4',
+  'biatch', 'biotch', 'chingchong', 'cracker', 'negro',
+  'tite', 'titi', 'pussy', 'faggot',
+];
+
+function hasProfanity(name: string): boolean {
+  const lower = name.toLowerCase();
+  return BLOCKLIST.some(word => lower.includes(word));
+}
+
 const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -16,8 +30,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const { playerName, streak, totalQuestions, timeMs } = req.body;
 
-  if (!playerName || typeof playerName !== 'string' || playerName.length > 20) {
+  if (!playerName || typeof playerName !== 'string' || playerName.length > 12) {
     return res.status(400).json({ error: 'Invalid player name' });
+  }
+
+  if (hasProfanity(playerName)) {
+    return res.status(400).json({ error: 'Name contains inappropriate language' });
   }
 
   if (typeof streak !== 'number' || streak < 0 || streak > 100) {

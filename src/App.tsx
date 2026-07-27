@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
 import ResultScreen from './components/ResultScreen';
@@ -34,12 +34,20 @@ function getQuestions(): Question[] {
 
 type Screen = 'start' | 'game' | 'result' | 'leaderboard';
 
+const THEMES = ['sixers', 'cavaliers', 'lakers', 'heat'] as const;
+type Theme = typeof THEMES[number];
+
 export default function App() {
   const [screen, setScreen] = useState<Screen>('start');
   const [questions, setQuestions] = useState<Question[]>(() => getQuestions());
   const [currentIndex, setCurrentIndex] = useState(0);
   const [streak, setStreak] = useState(0);
   const [totalAnswered, setTotalAnswered] = useState(0);
+  const [theme, setTheme] = useState<Theme>('sixers');
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   const handlePlay = () => {
     setQuestions(getQuestions());
@@ -81,34 +89,41 @@ export default function App() {
   const currentQuestion = questions[currentIndex];
 
   return (
-    <div className="min-h-screen bg-sixers-navy">
-      {screen === 'start' && (
-        <StartScreen onPlay={handlePlay} onLeaderboard={() => setScreen('leaderboard')} />
-      )}
+    <div className="min-h-screen bg-sixers-navy flex justify-center">
+      <div className="w-full max-w-md">
+        {screen === 'start' && (
+          <StartScreen
+            onPlay={handlePlay}
+            onLeaderboard={() => setScreen('leaderboard')}
+            theme={theme}
+            onThemeChange={setTheme}
+          />
+        )}
 
-      {screen === 'game' && currentQuestion && (
-        <GameScreen
-          key={currentQuestion.id}
-          question={currentQuestion}
-          questionIndex={currentIndex}
-          totalAnswered={totalAnswered}
-          streak={streak}
-          onAnswer={handleAnswer}
-        />
-      )}
+        {screen === 'game' && currentQuestion && (
+          <GameScreen
+            key={currentQuestion.id}
+            question={currentQuestion}
+            questionIndex={currentIndex}
+            totalAnswered={totalAnswered}
+            streak={streak}
+            onAnswer={handleAnswer}
+          />
+        )}
 
-      {screen === 'result' && (
-        <ResultScreen
-          streak={streak}
-          totalAnswered={totalAnswered}
-          onSubmit={handleSubmitScore}
-          onPlayAgain={handlePlay}
-        />
-      )}
+        {screen === 'result' && (
+          <ResultScreen
+            streak={streak}
+            totalAnswered={totalAnswered}
+            onSubmit={handleSubmitScore}
+            onPlayAgain={handlePlay}
+          />
+        )}
 
-      {screen === 'leaderboard' && (
-        <Leaderboard onBack={() => setScreen('start')} />
-      )}
+        {screen === 'leaderboard' && (
+          <Leaderboard onBack={() => setScreen('start')} />
+        )}
+      </div>
     </div>
   );
 }

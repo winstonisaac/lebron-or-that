@@ -1,9 +1,16 @@
+import { useState } from 'react';
+import SettingsModal from './SettingsModal';
+
 interface StartScreenProps {
   onPlay: () => void;
   onLeaderboard: () => void;
+  theme: string;
+  onThemeChange: (theme: 'sixers' | 'cavaliers' | 'lakers' | 'heat') => void;
 }
 
-export default function StartScreen({ onPlay, onLeaderboard }: StartScreenProps) {
+export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChange }: StartScreenProps) {
+  const [showSettings, setShowSettings] = useState(false);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
       <div className="text-center animate-slide-up">
@@ -22,24 +29,38 @@ export default function StartScreen({ onPlay, onLeaderboard }: StartScreenProps)
 
         <button
           onClick={onPlay}
-          className="bg-sixers-red hover:bg-red-600 text-white font-bold text-2xl px-12 py-4 rounded-full mb-6 transition-all hover:scale-105 active:scale-95 animate-pulse-glow"
+          className="bg-sixers-red hover:bg-red-600 text-white font-bold text-2xl px-12 py-4 rounded-full mb-4 transition-all hover:scale-105 active:scale-95 animate-pulse-glow"
         >
           Play
         </button>
 
-        <div>
+        <div className="flex flex-col gap-2">
           <button
             onClick={onLeaderboard}
-            className="text-sixers-silver hover:text-white text-sm underline transition-colors"
+            className="text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
           >
             Leaderboard
           </button>
+          <button
+            onClick={() => setShowSettings(true)}
+            className="text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+          >
+            Settings
+          </button>
         </div>
 
-        <div className="mt-10 text-sixers-silver/40 text-xs">
+        <div className="mt-8 text-sixers-silver/40 text-xs">
           ← Older &nbsp;|&nbsp; Younger →
         </div>
       </div>
+
+      {showSettings && (
+        <SettingsModal
+          theme={theme}
+          onThemeChange={onThemeChange}
+          onClose={() => setShowSettings(false)}
+        />
+      )}
     </div>
   );
 }

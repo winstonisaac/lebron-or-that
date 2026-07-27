@@ -1,6 +1,17 @@
 let audioCtx: AudioContext | null = null;
+let _soundEnabled = true;
 
-function getCtx(): AudioContext {
+export function isSoundEnabled(): boolean {
+  return _soundEnabled;
+}
+
+export function toggleSound(): boolean {
+  _soundEnabled = !_soundEnabled;
+  return _soundEnabled;
+}
+
+function getCtx(): AudioContext | null {
+  if (!_soundEnabled) return null;
   if (!audioCtx) {
     audioCtx = new AudioContext();
   }
@@ -9,6 +20,7 @@ function getCtx(): AudioContext {
 
 export function playCorrect() {
   const ctx = getCtx();
+  if (!ctx) return;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
@@ -25,6 +37,7 @@ export function playCorrect() {
 
 export function playWrong() {
   const ctx = getCtx();
+  if (!ctx) return;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
@@ -40,6 +53,7 @@ export function playWrong() {
 
 export function playTimeout() {
   const ctx = getCtx();
+  if (!ctx) return;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.connect(gain);
