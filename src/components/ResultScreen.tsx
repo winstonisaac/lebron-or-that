@@ -146,9 +146,10 @@ export default function ResultScreen({
                   })}
                 </div>
                 {userRank > 20 && (
-                  <p className="mt-3 text-sixers-silver/80 text-sm font-medium">
-                    #{userRank}: {name.trim()} ({streak})
-                  </p>
+                  <div className="mt-4 flex justify-between items-center px-4 py-3 rounded-xl bg-sixers-blue/20 border border-sixers-blue/40 scale-105 shadow-lg">
+                    <span className="text-white font-semibold text-base">#{userRank}: {name.trim()}</span>
+                    <span className="text-sixers-red font-bold text-lg">{streak}</span>
+                  </div>
                 )}
               </>
             )}
