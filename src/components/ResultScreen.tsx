@@ -80,7 +80,7 @@ export default function ResultScreen({
     : '🐐';
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 pb-16">
       <div className="text-center animate-slide-up">
         <div className="text-6xl mb-4">{streakEmoji}</div>
         <h2 className="text-4xl md:text-5xl font-extrabold mb-2">
@@ -134,7 +134,13 @@ export default function ResultScreen({
                         className={`flex justify-between px-3 py-2 rounded-lg text-sm transition-all ${
                           isYou
                             ? 'bg-sixers-blue/20 border border-sixers-blue/40'
-                            : 'bg-white/5'
+                            : i === 0
+                              ? 'bg-amber-400/20 border border-amber-400/40'
+                              : i === 1
+                                ? 'bg-gray-300/20 border border-gray-300/30'
+                                : i === 2
+                                  ? 'bg-amber-700/20 border border-amber-700/30'
+                                  : 'bg-white/5'
                         }`}
                       >
                         <span className="text-white/80">
@@ -164,12 +170,14 @@ export default function ResultScreen({
             🔁 Play Again
           </button>
           <div className="flex flex-col sm:flex-row gap-2">
-            <button
-              onClick={onLeaderboard}
-              className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
-            >
-              🏆 Leaderboard
-            </button>
+            {!submitted && (
+              <button
+                onClick={onLeaderboard}
+                className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+              >
+                🏆 Leaderboard
+              </button>
+            )}
             <button
               onClick={onTitleScreen}
               className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"

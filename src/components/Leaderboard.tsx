@@ -47,11 +47,11 @@ export default function Leaderboard({ onBack }: LeaderboardProps) {
                 key={entry.id}
                 className={`flex items-center justify-between px-4 py-3 rounded-xl ${
                   i === 0
-                    ? 'bg-sixers-red/20 border border-sixers-red/40'
+                    ? 'bg-amber-400/20 border border-amber-400/40'
                     : i === 1
-                      ? 'bg-sixers-blue/10 border border-white/10'
+                      ? 'bg-gray-300/20 border border-gray-300/30'
                       : i === 2
-                        ? 'bg-sixers-blue/5 border border-white/5'
+                        ? 'bg-amber-700/20 border border-amber-700/30'
                         : 'bg-white/5 border border-white/5'
                 }`}
               >

@@ -40,7 +40,7 @@ export default function TutorialModal({ onStart }: TutorialModalProps) {
         </div>
 
         <p className="text-xs text-sixers-silver/60 mb-5">
-          You have 3 seconds per question. {isMobile ? 'Swipe or click the buttons to play.' : 'Use keyboard or click the buttons to play.'}
+          You have 5 seconds per question. {isMobile ? 'Swipe or click the buttons to play.' : 'Use keyboard or click the buttons to play.'}
         </p>
 
         <label className="flex items-center justify-center gap-2 mb-5 cursor-pointer">

@@ -97,7 +97,7 @@ export default function GameScreen({
       {...swipeHandlers}
     >
       <div className="w-full max-w-md">
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex justify-between items-start mb-2 p-3 rounded-xl" style={{ backgroundColor: 'var(--color-header-bg)' }}>
           <div className="flex flex-col items-center">
             <span
               className="text-3xl font-bold tracking-[0.2em]"
