@@ -58,6 +58,7 @@ export default function ResultScreen({
     const style = getComputedStyle(document.documentElement);
     const bg1 = style.getPropertyValue('--color-sixers-navy').trim() || '#002B5C';
     const accent = style.getPropertyValue('--color-title-accent').trim() || '#ED174C';
+    const accent2 = style.getPropertyValue('--color-sixers-blue').trim() || '#006BB6';
 
     const grad = ctx.createLinearGradient(0, 0, 0, H);
     grad.addColorStop(0, `#${bg1.replace('#','')}`);
@@ -65,17 +66,12 @@ export default function ResultScreen({
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-    ctx.lineWidth = 2;
-    drawRoundRect(ctx, 10, 10, W-20, H-20, 10);
-    ctx.stroke();
-
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
     if (titleImg) {
       ctx.save();
-      const tw = 560, th = Math.round(560 * 347 / 640);
+      const tw = 360, th = Math.round(360 * 347 / 640);
       ctx.beginPath();
       drawRoundRect(ctx, (W-tw)/2, 15, tw, th, 16);
       ctx.clip();
@@ -85,11 +81,11 @@ export default function ResultScreen({
 
     // Score container
     ctx.fillStyle = 'rgba(0,0,0,0.25)';
-    drawRoundRect(ctx, W/2-55, 295, 110, 110, 14);
+    drawRoundRect(ctx, W/2-55, 245, 110, 110, 14);
     ctx.fill();
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.lineWidth = 1;
-    drawRoundRect(ctx, W/2-55, 295, 110, 110, 14);
+    drawRoundRect(ctx, W/2-55, 245, 110, 110, 14);
     ctx.stroke();
 
     await document.fonts.load('bold 50px "LED Font"');
@@ -98,30 +94,31 @@ export default function ResultScreen({
     ctx.shadowBlur = 20;
     ctx.fillStyle = `#${accent.replace('#','')}`;
     ctx.font = 'bold 50px "LED Font", monospace';
-    ctx.fillText(String(streak).padStart(2, '0'), W/2, 330);
+    ctx.fillText(String(streak).padStart(2, '0'), W/2, 280);
     ctx.shadowBlur = 0;
 
     ctx.fillStyle = 'rgba(255,255,255,0.45)';
     ctx.font = '12px sans-serif';
-    ctx.fillText('SCORE', W/2, 387);
+    ctx.fillText('SCORE', W/2, 337);
 
-    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-    ctx.beginPath();
-    ctx.moveTo(200, 439);
-    ctx.lineTo(400, 439);
+    // Bottom bar
+    ctx.fillStyle = `#${accent2.replace('#','')}`;
+    ctx.globalAlpha = 0.15;
+    drawRoundRect(ctx, 15, 490, W-30, 100, 14);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = `#${accent2.replace('#','')}40`;
+    ctx.lineWidth = 1;
+    drawRoundRect(ctx, 15, 490, W-30, 100, 14);
     ctx.stroke();
 
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.font = '700 17px sans-serif';
-    ctx.fillText('Can you beat my score?', W/2, 484);
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.font = '700 16px sans-serif';
+    ctx.fillText('Can you beat my score?', W/2, 530);
 
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
     ctx.font = '13px sans-serif';
-    ctx.fillText('lebron-or-that.vercel.app', W/2, 514);
-
-    ctx.fillStyle = `#${accent.replace('#','')}40`;
-    drawRoundRect(ctx, W/2-60, H-8, 120, 3, 4);
-    ctx.fill();
+    ctx.fillText('lebron-or-that.vercel.app', W/2, 560);
   }
 
   function drawRoundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
@@ -284,28 +281,28 @@ export default function ResultScreen({
             onClick={onPlayAgain}
             className="bg-sixers-red hover:bg-white hover:text-sixers-red text-white font-bold text-lg px-10 py-3 rounded-full transition-all hover:scale-105 active:scale-95"
           >
-            🔁
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 4v5h5"/><path d="M20 20v-5h-5"/><path d="M4.5 16.5A9 9 0 1119.5 7.5"/></svg>
           </button>
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               onClick={handleShare}
               className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
             >
-              📤
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 12v6a2 2 0 002 2h12a2 2 0 002-2v-6"/><path d="M12 2v13m0-13l4 4m-4-4L8 6"/></svg>
             </button>
             {!submitted && (
               <button
                 onClick={onLeaderboard}
                 className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
               >
-                🏆
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
               </button>
             )}
             <button
               onClick={onTitleScreen}
               className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
             >
-              🏠
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
             </button>
           </div>
         </div>
