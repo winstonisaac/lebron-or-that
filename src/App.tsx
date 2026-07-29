@@ -148,7 +148,7 @@ export default function App() {
         href="https://winstonisaac.com"
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute bottom-[18px] left-0 right-0 text-center text-xs text-sixers-silver/30 hover:text-sixers-silver/60 transition-colors"
+        className="absolute bottom-[18px] left-0 right-0 text-center text-xs text-sixers-silver/30 hover:text-sixers-silver/60 underline transition-colors"
       >
         vibe coded by Winston
       </a>

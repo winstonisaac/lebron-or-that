@@ -29,7 +29,7 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
 
         <button
           onClick={onPlay}
-          className="bg-sixers-red hover:bg-white hover:text-sixers-red text-white font-bold text-2xl px-12 py-4 rounded-full mb-4 transition-all hover:scale-105 active:scale-95 animate-pulse-glow"
+          className="bg-sixers-red hover:bg-white hover:text-sixers-red text-white font-bold text-2xl px-12 py-4 rounded-full mb-8 transition-all hover:scale-105 active:scale-95 animate-pulse-glow"
         >
           Play
         </button>
@@ -39,13 +39,13 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
             onClick={onLeaderboard}
             className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
           >
-            🏆 Leaderboard
+            🏆
           </button>
           <button
             onClick={() => setShowSettings(true)}
             className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
           >
-            ⚙️ Settings
+            ⚙️
           </button>
         </div>
       </div>

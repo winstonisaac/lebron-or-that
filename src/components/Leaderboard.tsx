@@ -45,15 +45,21 @@ export default function Leaderboard({ onBack }: LeaderboardProps) {
             {entries.map((entry, i) => (
               <div
                 key={entry.id}
-                className={`flex items-center justify-between px-4 py-3 rounded-xl ${
+                className={`flex items-center justify-between rounded-xl ${
                   i === 0
-                    ? 'bg-amber-400/20 border border-amber-400/40'
+                    ? 'py-4 px-5 text-yellow-900'
                     : i === 1
-                      ? 'bg-gray-300/20 border border-gray-300/30'
+                      ? 'py-4 px-5 text-gray-800'
                       : i === 2
-                        ? 'bg-amber-700/20 border border-amber-700/30'
-                        : 'bg-white/5 border border-white/5'
+                        ? 'py-4 px-5 text-yellow-900'
+                        : 'py-3 px-4 bg-white/5 border border-white/5 text-white'
                 }`}
+                style={
+                  i === 0 ? { background: 'linear-gradient(135deg, #F59E0B, #D97706)' }
+                  : i === 1 ? { background: 'linear-gradient(135deg, #E5E7EB, #9CA3AF)' }
+                  : i === 2 ? { background: 'linear-gradient(135deg, #D97706, #92400E)' }
+                  : {}
+                }
               >
                 <div className="flex items-center gap-3">
                   <span className="text-xl font-bold text-sixers-silver/60 w-8">

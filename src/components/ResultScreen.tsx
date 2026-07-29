@@ -54,8 +54,6 @@ export default function ResultScreen({
     const ctx = canvas.getContext('2d')!;
     const W = 600, H = 600;
 
-    await document.fonts.load('bold 80px "LED Font"');
-
     const style = getComputedStyle(document.documentElement);
     const bg1 = style.getPropertyValue('--color-sixers-navy').trim() || '#002B5C';
     const accent = style.getPropertyValue('--color-title-accent').trim() || '#ED174C';
@@ -74,54 +72,62 @@ export default function ResultScreen({
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    ctx.font = 'bold 32px sans-serif';
-    ctx.fillStyle = `#${accent.replace('#','')}`;
-    ctx.fillText('LeBron', W/2 - 80, 48);
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText('or', W/2, 48);
-    ctx.fillStyle = `#${accent.replace('#','')}`;
-    ctx.fillText('That', W/2 + 85, 48);
-
-    ctx.font = '28px sans-serif';
-    ctx.fillText('🏀', W/2, 92);
-
     if (lebronImg) {
       ctx.save();
-      drawRoundRect(ctx, W/2-75, 120, 150, 150, 24);
+      drawRoundRect(ctx, W/2-75, 50, 150, 150, 24);
       ctx.clip();
-      ctx.drawImage(lebronImg, W/2-75, 120, 150, 150);
+      ctx.drawImage(lebronImg, W/2-75, 50, 150, 150);
       ctx.restore();
     }
 
     ctx.strokeStyle = 'rgba(255,255,255,0.1)';
     ctx.lineWidth = 1;
-    drawRoundRect(ctx, W/2-75, 120, 150, 150, 24);
+    drawRoundRect(ctx, W/2-75, 50, 150, 150, 24);
     ctx.stroke();
 
-    ctx.shadowColor = `#${accent.replace('#','')}99`;
-    ctx.shadowBlur = 25;
+    ctx.font = 'bold 28px sans-serif';
     ctx.fillStyle = `#${accent.replace('#','')}`;
-    ctx.font = 'bold 80px "LED Font", monospace';
-    ctx.fillText(String(streak).padStart(2, '0'), W/2, 385);
+    ctx.fillText('LeBron', W/2 - 68, 235);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('or', W/2, 235);
+    ctx.fillStyle = `#${accent.replace('#','')}`;
+    ctx.fillText('That', W/2 + 72, 235);
+
+    // Score container
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    drawRoundRect(ctx, W/2-80, 280, 160, 80, 14);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    drawRoundRect(ctx, W/2-80, 280, 160, 80, 14);
+    ctx.stroke();
+
+    await document.fonts.load('bold 52px "LED Font"');
+
+    ctx.shadowColor = `#${accent.replace('#','')}99`;
+    ctx.shadowBlur = 20;
+    ctx.fillStyle = `#${accent.replace('#','')}`;
+    ctx.font = 'bold 50px "LED Font", monospace';
+    ctx.fillText(String(streak).padStart(2, '0'), W/2, 315);
     ctx.shadowBlur = 0;
 
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
-    ctx.font = '13px sans-serif';
-    ctx.fillText('SCORE', W/2, 430);
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    ctx.font = '12px sans-serif';
+    ctx.fillText('SCORE', W/2, 348);
 
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.beginPath();
-    ctx.moveTo(200, 470);
-    ctx.lineTo(400, 470);
+    ctx.moveTo(200, 400);
+    ctx.lineTo(400, 400);
     ctx.stroke();
 
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
     ctx.font = '700 17px sans-serif';
-    ctx.fillText('Can you beat my score?', W/2, 510);
+    ctx.fillText('Can you beat my score?', W/2, 445);
 
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
     ctx.font = '13px sans-serif';
-    ctx.fillText('lebron-or-that.vercel.app', W/2, 540);
+    ctx.fillText('lebron-or-that.vercel.app', W/2, 475);
 
     ctx.fillStyle = `#${accent.replace('#','')}40`;
     drawRoundRect(ctx, W/2-60, H-8, 120, 3, 4);
@@ -235,12 +241,6 @@ export default function ResultScreen({
               className="mt-4 bg-sixers-red hover:bg-white hover:text-sixers-red disabled:bg-white/20 disabled:text-white/40 text-white font-bold text-lg px-10 py-3 rounded-full transition-all hover:scale-105 active:scale-95"
             >
               Submit Score
-            </button>
-            <button
-              onClick={handleShare}
-              className="mt-2 text-sixers-silver/50 hover:text-sixers-silver text-xs underline transition-colors"
-            >
-              Nah, just share instead
             </button>
           </div>
         ) : (
