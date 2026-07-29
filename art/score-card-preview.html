@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    min-height: 100vh; background: #1a1a2e; font-family: sans-serif;
+    gap: 20px; padding: 20px;
+  }
+  .theme-picker { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .theme-btn {
+    padding: 10px 20px; border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px; background: transparent; color: #fff;
+    font-size: 14px; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .theme-btn:hover { border-color: rgba(255,255,255,0.5); }
+  .theme-btn.active { border-color: #fff; background: rgba(255,255,255,0.1); }
+  .dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); }
+  canvas { border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); max-width: 100%; }
+</style>
+</head>
+<body>
+
+<canvas id="c" width="600" height="600"></canvas>
+
+<div class="theme-picker" id="picker"></div>
+
+<script>
+const THEMES = [
+  { id: 'sixers', label: '76ers', bg1: '#002B5C', bg2: '#001a3a', title: '#ED174C', score: '#ED174C', accent: '#006BB6' },
+  { id: 'cavaliers', label: 'Cavaliers', bg1: '#041E42', bg2: '#02132e', title: '#FFB81C', score: '#FFB81C', accent: '#FFB81C' },
+  { id: 'lakers', label: 'Lakers', bg1: '#552583', bg2: '#3a1a5c', title: '#FDB927', score: '#FDB927', accent: '#FDB927' },
+  { id: 'heat', label: 'Heat', bg1: '#111111', bg2: '#000000', title: '#98002E', score: '#98002E', accent: '#F9A01B' },
+];
+
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+const W = 600, H = 600;
+
+let currentTheme = THEMES[0];
+const score = 12;
+const img = new Image();
+img.crossOrigin = 'anonymous';
+img.src = '/lebron-main.png';
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, currentTheme.bg1);
+  grad.addColorStop(1, currentTheme.bg2);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Border
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 2;
+  roundRect(ctx, 10, 10, W-20, H-20);
+  ctx.stroke();
+
+  // Title: "LeBron" + "or" + "That"
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  ctx.font = 'bold 32px sans-serif';
+  ctx.fillStyle = currentTheme.title;
+  ctx.fillText('LeBron', W/2 - 80, 48);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('or', W/2, 48);
+  ctx.fillStyle = currentTheme.title;
+  ctx.fillText('That', W/2 + 85, 48);
+
+  // Basketball emoji above title
+  ctx.font = '28px sans-serif';
+  ctx.fillText('🏀', W/2, 92);
+
+  // Image circle
+  if (img.complete && img.naturalWidth > 0) {
+    ctx.save();
+    roundRect(ctx, W/2-75, 120, 150, 150, 24);
+    ctx.clip();
+    ctx.drawImage(img, W/2-75, 120, 150, 150);
+    ctx.restore();
+  } else {
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    roundRect(ctx, W/2-75, 120, 150, 150, 24);
+    ctx.fill();
+  }
+
+  // Glow ring around image
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, W/2-75, 120, 150, 150, 24);
+  ctx.stroke();
+
+  // Score number
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = currentTheme.score + '99';
+  ctx.shadowBlur = 25;
+  ctx.fillStyle = currentTheme.score;
+  ctx.font = 'bold 80px monospace';
+  ctx.fillText(String(score).padStart(2, '0'), W/2, 385);
+  ctx.shadowBlur = 0;
+
+  // Score label
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.font = '13px sans-serif';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('SCORE', W/2, 430);
+
+  // Divider
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(200, 470);
+  ctx.lineTo(400, 470);
+  ctx.stroke();
+
+  // Footer
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.font = '700 17px sans-serif';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Can you beat my score?', W/2, 510);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  ctx.font = '13px sans-serif';
+  ctx.fillText('lebron-or-that.vercel.app', W/2, 540);
+
+  // Small accent line at bottom
+  ctx.fillStyle = currentTheme.accent + '40';
+  roundRect(ctx, W/2-60, H-8, 120, 3, 4);
+  ctx.fill();
+}
+
+// Build theme picker
+const picker = document.getElementById('picker');
+THEMES.forEach((t, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'theme-btn' + (i === 0 ? ' active' : '');
+  const dot = document.createElement('span');
+  dot.className = 'dot';
+  dot.style.backgroundColor = t.title;
+  btn.appendChild(dot);
+  btn.appendChild(document.createTextNode(t.label));
+  btn.onclick = () => {
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTheme = t;
+    draw();
+  };
+  picker.appendChild(btn);
+});
+
+// Load image and draw
+if (img.complete) draw();
+else img.onload = draw;
+</script>
+</body>
+</html>

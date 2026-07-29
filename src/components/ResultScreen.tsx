@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../supabase/client';
 
 const BLOCKLIST = [
@@ -40,6 +40,127 @@ export default function ResultScreen({
   const [topScores, setTopScores] = useState<LBEntry[]>([]);
   const [userRank, setUserRank] = useState(0);
   const [loadingLB, setLoadingLB] = useState(false);
+  const [lebronImg, setLebronImg] = useState<HTMLImageElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = '/lebron-main.png';
+    img.onload = () => setLebronImg(img);
+  }, []);
+
+  async function generateScoreCard(canvas: HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d')!;
+    const W = 600, H = 600;
+
+    await document.fonts.load('bold 80px "LED Font"');
+
+    const style = getComputedStyle(document.documentElement);
+    const bg1 = style.getPropertyValue('--color-sixers-navy').trim() || '#002B5C';
+    const accent = style.getPropertyValue('--color-title-accent').trim() || '#ED174C';
+
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, `#${bg1.replace('#','')}`);
+    grad.addColorStop(1, '#000000');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 2;
+    drawRoundRect(ctx, 10, 10, W-20, H-20, 10);
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.font = 'bold 32px sans-serif';
+    ctx.fillStyle = `#${accent.replace('#','')}`;
+    ctx.fillText('LeBron', W/2 - 80, 48);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('or', W/2, 48);
+    ctx.fillStyle = `#${accent.replace('#','')}`;
+    ctx.fillText('That', W/2 + 85, 48);
+
+    ctx.font = '28px sans-serif';
+    ctx.fillText('🏀', W/2, 92);
+
+    if (lebronImg) {
+      ctx.save();
+      drawRoundRect(ctx, W/2-75, 120, 150, 150, 24);
+      ctx.clip();
+      ctx.drawImage(lebronImg, W/2-75, 120, 150, 150);
+      ctx.restore();
+    }
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+    ctx.lineWidth = 1;
+    drawRoundRect(ctx, W/2-75, 120, 150, 150, 24);
+    ctx.stroke();
+
+    ctx.shadowColor = `#${accent.replace('#','')}99`;
+    ctx.shadowBlur = 25;
+    ctx.fillStyle = `#${accent.replace('#','')}`;
+    ctx.font = 'bold 80px "LED Font", monospace';
+    ctx.fillText(String(streak).padStart(2, '0'), W/2, 385);
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.font = '13px sans-serif';
+    ctx.fillText('SCORE', W/2, 430);
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.beginPath();
+    ctx.moveTo(200, 470);
+    ctx.lineTo(400, 470);
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.font = '700 17px sans-serif';
+    ctx.fillText('Can you beat my score?', W/2, 510);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '13px sans-serif';
+    ctx.fillText('lebron-or-that.vercel.app', W/2, 540);
+
+    ctx.fillStyle = `#${accent.replace('#','')}40`;
+    drawRoundRect(ctx, W/2-60, H-8, 120, 3, 4);
+    ctx.fill();
+  }
+
+  function drawRoundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.lineTo(x+w-r, y);
+    ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+    ctx.lineTo(x+w, y+h-r);
+    ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+    ctx.lineTo(x+r, y+h);
+    ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+    ctx.lineTo(x, y+r);
+    ctx.quadraticCurveTo(x, y, x+r, y);
+    ctx.closePath();
+  }
+
+  const handleShare = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    await generateScoreCard(canvas);
+    const blob = await new Promise<Blob>(resolve => canvas.toBlob(b => resolve(b!), 'image/png'));
+    if (navigator.share && navigator.canShare?.({ files: [new File([blob], 'score.png', { type: 'image/png' })] })) {
+      navigator.share({
+        title: 'LeBron or That Score',
+        text: `I scored ${streak} on LeBron or That! 🏀`,
+        files: [new File([blob], 'score.png', { type: 'image/png' })],
+      }).catch(() => {});
+    } else {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `lebron-or-that-${streak}.png`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+  };
 
   useEffect(() => {
     if (!submitted) return;
@@ -115,6 +236,12 @@ export default function ResultScreen({
             >
               Submit Score
             </button>
+            <button
+              onClick={handleShare}
+              className="mt-2 text-sixers-silver/50 hover:text-sixers-silver text-xs underline transition-colors"
+            >
+              Nah, just share instead
+            </button>
           </div>
         ) : (
           <div className="mb-8">
@@ -170,6 +297,12 @@ export default function ResultScreen({
             🔁 Play Again
           </button>
           <div className="flex flex-col sm:flex-row gap-2">
+            <button
+              onClick={handleShare}
+              className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+            >
+              📤 Share
+            </button>
             {!submitted && (
               <button
                 onClick={onLeaderboard}
@@ -186,6 +319,8 @@ export default function ResultScreen({
             </button>
           </div>
         </div>
+
+        <canvas ref={canvasRef} width="600" height="600" style={{ display: 'none' }} />
       </div>
     </div>
   );
