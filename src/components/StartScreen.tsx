@@ -37,13 +37,13 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
         <div className="flex flex-col sm:flex-row gap-2">
           <button
             onClick={onLeaderboard}
-            className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+            className="text-sixers-silver hover:text-white text-sm py-2 px-8 rounded-lg border border-white/10 hover:border-white/30 transition-all"
           >
             🏆
           </button>
           <button
             onClick={() => setShowSettings(true)}
-            className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
+            className="text-sixers-silver hover:text-white text-sm py-2 px-8 rounded-lg border border-white/10 hover:border-white/30 transition-all"
           >
             ⚙️
           </button>

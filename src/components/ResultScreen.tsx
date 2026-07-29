@@ -74,35 +74,35 @@ export default function ResultScreen({
 
     if (lebronImg) {
       ctx.save();
-      drawRoundRect(ctx, W/2-75, 50, 150, 150, 24);
+      drawRoundRect(ctx, W/2-60, 65, 120, 120, 20);
       ctx.clip();
-      ctx.drawImage(lebronImg, W/2-75, 50, 150, 150);
+      ctx.drawImage(lebronImg, W/2-60, 65, 120, 120);
       ctx.restore();
     }
 
-    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-    ctx.lineWidth = 1;
-    drawRoundRect(ctx, W/2-75, 50, 150, 150, 24);
-    ctx.stroke();
-
-    ctx.font = 'bold 28px sans-serif';
+    ctx.font = 'bold 36px Inter, sans-serif';
     ctx.fillStyle = `#${accent.replace('#','')}`;
-    ctx.fillText('LeBron', W/2 - 68, 235);
+    const titleText = 'LeBron or That';
+    const titleWidth = ctx.measureText(titleText).width;
+    let tx = W/2 - titleWidth / 2;
+    const lebronW = ctx.measureText('LeBron ').width;
+    ctx.fillText('LeBron ', tx, 220); tx += lebronW;
+    const orW = ctx.measureText('or ').width;
     ctx.fillStyle = '#ffffff';
-    ctx.fillText('or', W/2, 235);
+    ctx.fillText('or ', tx, 220); tx += orW;
     ctx.fillStyle = `#${accent.replace('#','')}`;
-    ctx.fillText('That', W/2 + 72, 235);
+    ctx.fillText('That', tx, 220);
 
     // Score container
     ctx.fillStyle = 'rgba(0,0,0,0.25)';
-    drawRoundRect(ctx, W/2-80, 280, 160, 80, 14);
+    drawRoundRect(ctx, W/2-55, 280, 110, 80, 14);
     ctx.fill();
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.lineWidth = 1;
-    drawRoundRect(ctx, W/2-80, 280, 160, 80, 14);
+    drawRoundRect(ctx, W/2-55, 280, 110, 80, 14);
     ctx.stroke();
 
-    await document.fonts.load('bold 52px "LED Font"');
+    await document.fonts.load('bold 50px "LED Font"');
 
     ctx.shadowColor = `#${accent.replace('#','')}99`;
     ctx.shadowBlur = 20;
@@ -117,17 +117,17 @@ export default function ResultScreen({
 
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.beginPath();
-    ctx.moveTo(200, 400);
-    ctx.lineTo(400, 400);
+    ctx.moveTo(200, 424);
+    ctx.lineTo(400, 424);
     ctx.stroke();
 
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
     ctx.font = '700 17px sans-serif';
-    ctx.fillText('Can you beat my score?', W/2, 445);
+    ctx.fillText('Can you beat my score?', W/2, 469);
 
     ctx.fillStyle = 'rgba(255,255,255,0.3)';
     ctx.font = '13px sans-serif';
-    ctx.fillText('lebron-or-that.vercel.app', W/2, 475);
+    ctx.fillText('lebron-or-that.vercel.app', W/2, 499);
 
     ctx.fillStyle = `#${accent.replace('#','')}40`;
     drawRoundRect(ctx, W/2-60, H-8, 120, 3, 4);
@@ -294,28 +294,28 @@ export default function ResultScreen({
             onClick={onPlayAgain}
             className="bg-sixers-red hover:bg-white hover:text-sixers-red text-white font-bold text-lg px-10 py-3 rounded-full transition-all hover:scale-105 active:scale-95"
           >
-            🔁 Play Again
+            🔁
           </button>
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               onClick={handleShare}
               className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
             >
-              📤 Share
+              📤
             </button>
             {!submitted && (
               <button
                 onClick={onLeaderboard}
                 className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
               >
-                🏆 Leaderboard
+                🏆
               </button>
             )}
             <button
               onClick={onTitleScreen}
               className="flex-1 text-sixers-silver hover:text-white text-sm py-2 px-6 rounded-lg border border-white/10 hover:border-white/30 transition-all"
             >
-              🏠 Title Screen
+              🏠
             </button>
           </div>
         </div>
