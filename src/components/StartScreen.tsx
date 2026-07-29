@@ -34,7 +34,7 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
           Play
         </button>
 
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
           <button
             onClick={onLeaderboard}
             className="text-sixers-silver hover:text-white text-sm py-2 px-8 rounded-lg border border-white/10 hover:border-white/30 transition-all"

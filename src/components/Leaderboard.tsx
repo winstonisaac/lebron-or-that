@@ -55,9 +55,9 @@ export default function Leaderboard({ onBack }: LeaderboardProps) {
                         : 'py-3 px-4 bg-white/5 border border-white/5 text-white'
                 }`}
                 style={
-                  i === 0 ? { background: 'linear-gradient(135deg, #F59E0B, #D97706)' }
-                  : i === 1 ? { background: 'linear-gradient(135deg, #E5E7EB, #9CA3AF)' }
-                  : i === 2 ? { background: 'linear-gradient(135deg, #D97706, #92400E)' }
+                  i === 0 ? { background: 'linear-gradient(to right, #B45309, #F59E0B, #B45309)' }
+                  : i === 1 ? { background: 'linear-gradient(to right, #6B7280, #E5E7EB, #6B7280)' }
+                  : i === 2 ? { background: 'linear-gradient(to right, #78350F, #D97706, #78350F)' }
                   : {}
                 }
               >
