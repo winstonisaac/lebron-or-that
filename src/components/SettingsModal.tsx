@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { isSoundEnabled, toggleSound } from '../utils/sounds';
+import { isSoundEnabled, toggleSound, getVolume, setVolume } from '../utils/sounds';
 
 interface SettingsModalProps {
   theme: string;
@@ -16,10 +16,16 @@ const THEMES = [
 
 export default function SettingsModal({ theme, onThemeChange, onClose }: SettingsModalProps) {
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
+  const [volume, setVolumeState] = useState(getVolume());
 
   const handleToggle = () => {
     toggleSound();
     setSoundOn(isSoundEnabled());
+  };
+
+  const handleVolume = (v: number) => {
+    setVolume(v);
+    setVolumeState(v);
   };
 
   return (
@@ -49,6 +55,21 @@ export default function SettingsModal({ theme, onThemeChange, onClose }: Setting
               {soundOn ? 'ON' : 'OFF'}
             </span>
           </button>
+
+          <div className="mt-3">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-sm text-white/70">Volume</span>
+              <span className="text-sm text-sixers-silver/60">{Math.round(volume * 100)}%</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={Math.round(volume * 100)}
+              onChange={(e) => handleVolume(Number(e.target.value) / 100)}
+              className="w-full accent-sixers-red"
+            />
+          </div>
         </div>
 
         <div>
