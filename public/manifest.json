@@ -1,0 +1,21 @@
+{
+  "name": "LeBron or That",
+  "short_name": "LeBron or That",
+  "description": "Is it older or younger than LeBron's NBA career? Test your knowledge!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#002B5C",
+  "theme_color": "#002B5C",
+  "icons": [
+    {
+      "src": "/lebron-main.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/lebron-main.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

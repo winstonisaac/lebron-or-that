@@ -20,7 +20,6 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-const LE_BRON_YEAR = 2003;
 const MIN_STREAK_TIME = 2000;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -30,7 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const { playerName, streak, totalQuestions, timeMs } = req.body;
 
-  if (!playerName || typeof playerName !== 'string' || playerName.length > 12) {
+  if (typeof playerName !== 'string' || playerName.trim().length === 0 || playerName.length > 12) {
     return res.status(400).json({ error: 'Invalid player name' });
   }
 

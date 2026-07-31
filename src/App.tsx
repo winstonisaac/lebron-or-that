@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import type { CSSProperties } from 'react';
 import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
 import ResultScreen from './components/ResultScreen';
@@ -49,17 +50,29 @@ export default function App() {
     (localStorage.getItem('lebron-theme') as Theme) || 'sixers'
   );
   const [showTutorial, setShowTutorial] = useState(false);
+  const [perfectGame, setPerfectGame] = useState(false);
+  const gameStartTime = useRef(0);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('lebron-theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    if (!perfectGame) return;
+    const t = setTimeout(() => {
+      setPerfectGame(false);
+      setScreen('result');
+    }, 2200);
+    return () => clearTimeout(t);
+  }, [perfectGame]);
+
   const startGame = () => {
     setQuestions(getQuestions());
     setCurrentIndex(0);
     setStreak(0);
     setTotalAnswered(0);
+    gameStartTime.current = Date.now();
     setScreen('game');
   };
 
@@ -76,12 +89,18 @@ export default function App() {
       setTotalAnswered((t) => t + 1);
       if (correct) {
         setStreak((s) => s + 1);
-        setCurrentIndex((i) => i + 1);
+        setCurrentIndex((i) => {
+          if (i + 1 >= questions.length) {
+            setPerfectGame(true);
+            return i;
+          }
+          return i + 1;
+        });
       } else {
         setScreen('result');
       }
     },
-    []
+    [questions.length]
   );
 
   const handleSubmitScore = async (name: string) => {
@@ -93,6 +112,7 @@ export default function App() {
           playerName: name,
           streak,
           totalQuestions: totalAnswered,
+          timeMs: Date.now() - gameStartTime.current,
         }),
       });
     } catch {
@@ -142,6 +162,22 @@ export default function App() {
 
       {showTutorial && (
         <TutorialModal onStart={() => { setShowTutorial(false); startGame(); }} />
+      )}
+
+      {perfectGame && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80">
+          <span className="text-7xl animate-celebrate">🐐</span>
+          <div className="text-5xl font-extrabold text-white mt-8">PERFECT GAME!</div>
+          <div className="text-sixers-silver mt-3 text-lg">You got every single one right</div>
+          <span className="emoji-burst" style={{ '--dx': '-180px', '--dy': '-140px', '--rot': '-40deg' } as CSSProperties}>🏀</span>
+          <span className="emoji-burst" style={{ '--dx': '0px', '--dy': '-200px', '--rot': '0deg' } as CSSProperties}>🎉</span>
+          <span className="emoji-burst" style={{ '--dx': '180px', '--dy': '-140px', '--rot': '40deg' } as CSSProperties}>👑</span>
+          <span className="emoji-burst" style={{ '--dx': '-220px', '--dy': '0px', '--rot': '-70deg' } as CSSProperties}>⭐</span>
+          <span className="emoji-burst" style={{ '--dx': '220px', '--dy': '0px', '--rot': '70deg' } as CSSProperties}>🏆</span>
+          <span className="emoji-burst" style={{ '--dx': '-180px', '--dy': '140px', '--rot': '40deg' } as CSSProperties}>🥇</span>
+          <span className="emoji-burst" style={{ '--dx': '0px', '--dy': '200px', '--rot': '0deg' } as CSSProperties}>🎊</span>
+          <span className="emoji-burst" style={{ '--dx': '180px', '--dy': '140px', '--rot': '-40deg' } as CSSProperties}>🚀</span>
+        </div>
       )}
 
       <a
