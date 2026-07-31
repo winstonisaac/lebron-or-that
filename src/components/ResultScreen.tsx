@@ -17,13 +17,14 @@ function hasProfanity(name: string): boolean {
   return BLOCKLIST.some(word => lower.includes(word));
 }
 
-interface LBEntry { player_name: string; streak: number; }
+interface LBEntry { id: number; player_name: string; streak: number; }
 
 interface ResultScreenProps {
   streak: number;
   totalAnswered: number;
+  totalQuestions: number;
   newBest: boolean;
-  onSubmit: (name: string) => void;
+  onSubmit: (name: string) => Promise<number | null>;
   onPlayAgain: () => void;
   onLeaderboard: () => void;
   onTitleScreen: () => void;
@@ -32,6 +33,7 @@ interface ResultScreenProps {
 export default function ResultScreen({
   streak,
   totalAnswered,
+  totalQuestions,
   newBest,
   onSubmit,
   onPlayAgain,
@@ -44,6 +46,7 @@ export default function ResultScreen({
   const [topScores, setTopScores] = useState<LBEntry[]>([]);
   const [userRank, setUserRank] = useState(0);
   const [loadingLB, setLoadingLB] = useState(false);
+  const [myEntryId, setMyEntryId] = useState<number | null>(null);
   const [titleImg, setTitleImg] = useState<HTMLImageElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -165,7 +168,7 @@ export default function ResultScreen({
       setLoadingLB(true);
       const { data: top } = await supabase
         .from('leaderboard')
-        .select('player_name, streak')
+        .select('id, player_name, streak')
         .order('streak', { ascending: false })
         .limit(20);
       if (top) setTopScores(top as LBEntry[]);
@@ -179,14 +182,16 @@ export default function ResultScreen({
     return () => clearTimeout(timer);
   }, [submitted, streak]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (submitted) return;
     const trimmed = name.trim();
     if (trimmed.length < 1) return;
     if (trimmed.length > 12) { setError('Name must be 12 characters or less'); return; }
     if (hasProfanity(trimmed)) { setError('Name contains inappropriate language'); return; }
     setError('');
     setSubmitted(true);
-    onSubmit(trimmed);
+    const id = await onSubmit(trimmed);
+    setMyEntryId(id);
   };
 
   const streakEmoji =
@@ -205,7 +210,9 @@ export default function ResultScreen({
           Score: <span className="text-sixers-red">{streak}</span>
         </h2>
         <p className="text-sixers-silver text-lg mb-8">
-          You got {totalAnswered - 1} right before getting knocked out!
+          {totalAnswered >= totalQuestions
+            ? 'You got them ALL right! Perfect game! 🏆'
+            : `You got ${totalAnswered - 1} right before getting knocked out!`}
         </p>
 
         {newBest && (
@@ -251,7 +258,7 @@ export default function ResultScreen({
                 )}
                 <div className="space-y-1.5 text-left">
                   {topScores.map((entry, i) => {
-                    const isYou = entry.player_name === name.trim() && entry.streak === streak;
+                    const isYou = myEntryId !== null && entry.id === myEntryId;
                     return (
                       <div
                         key={i}

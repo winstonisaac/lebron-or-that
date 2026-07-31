@@ -62,15 +62,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'Invalid score: streak and total questions mismatch' });
   }
 
-  const { error } = await supabase.from('leaderboard').insert({
-    player_name: playerName.trim(),
-    streak,
-    total_questions: totalQuestions,
-  });
+  const { data, error } = await supabase
+    .from('leaderboard')
+    .insert({
+      player_name: playerName.trim(),
+      streak,
+      total_questions: totalQuestions,
+    })
+    .select('id')
+    .single();
 
   if (error) {
     return res.status(500).json({ error: 'Failed to save score' });
   }
 
-  return res.status(200).json({ ok: true });
+  return res.status(200).json({ ok: true, id: data?.id });
 }

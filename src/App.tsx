@@ -120,9 +120,9 @@ export default function App() {
     [questions.length, streak, bestStreak]
   );
 
-  const handleSubmitScore = async (name: string) => {
+  const handleSubmitScore = async (name: string): Promise<number | null> => {
     try {
-      await fetch('/api/submit-streak', {
+      const res = await fetch('/api/submit-streak', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -132,8 +132,14 @@ export default function App() {
           timeMs: Date.now() - gameStartTime.current,
         }),
       });
+      if (res.ok) {
+        const data = await res.json();
+        return typeof data.id === 'number' ? data.id : null;
+      }
+      return null;
     } catch {
       console.error('Failed to submit score');
+      return null;
     }
   };
 
@@ -166,6 +172,7 @@ export default function App() {
           <ResultScreen
             streak={streak}
             totalAnswered={totalAnswered}
+            totalQuestions={questions.length}
             newBest={newBest}
             onSubmit={handleSubmitScore}
             onPlayAgain={handlePlay}
