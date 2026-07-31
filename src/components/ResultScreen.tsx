@@ -275,7 +275,7 @@ export default function ResultScreen({
                         }`}
                         style={
                           isYou
-                            ? { background: 'linear-gradient(to right, var(--color-sixers-blue)22, var(--color-sixers-blue)55, var(--color-sixers-blue)22)', border: '2px solid var(--color-sixers-blue)88' }
+                            ? { background: 'linear-gradient(to right, var(--color-sixers-blue)22, var(--color-sixers-blue)55, var(--color-sixers-blue)22)', border: '2px solid rgba(255,255,255,0.9)' }
                             : i === 0
                               ? { background: 'linear-gradient(to right, #B45309, #F59E0B, #B45309)' }
                               : i === 1
@@ -294,7 +294,7 @@ export default function ResultScreen({
                   })}
                 </div>
                 {userRank > 20 && (
-                  <div className="mt-4 flex justify-between items-center px-5 py-4 rounded-xl text-white scale-105 shadow-lg" style={{ background: 'linear-gradient(to right, var(--color-sixers-blue)22, var(--color-sixers-blue)55, var(--color-sixers-blue)22)', border: '2px solid var(--color-sixers-blue)88' }}>
+                  <div className="mt-4 flex justify-between items-center px-5 py-4 rounded-xl text-white scale-105 shadow-lg" style={{ background: 'linear-gradient(to right, var(--color-sixers-blue)22, var(--color-sixers-blue)55, var(--color-sixers-blue)22)', border: '2px solid rgba(255,255,255,0.9)' }}>
                     <span className="text-white font-semibold text-base">#{userRank}: {name.trim()}</span>
                     <span className="text-sixers-blue font-bold text-lg">{streak}</span>
                   </div>
