@@ -8,6 +8,8 @@ const BLOCKLIST = [
   'puta', 'nigg3r', 'n1gger', 'nigg@', 'nigg4',
   'biatch', 'biotch', 'chingchong', 'cracker', 'negro',
   'tite', 'titi', 'pussy', 'faggot',
+  'bading', 'bakla', 'bayot', 'duterte', 'du30', 'kupal', 'puke',
+  'tangina', 'deputa', 'bobo', 'ulol', 'chink', 'wanker', 'wank',
 ];
 
 function hasProfanity(name: string): boolean {

@@ -46,9 +46,10 @@ export default function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [streak, setStreak] = useState(0);
   const [totalAnswered, setTotalAnswered] = useState(0);
-  const [theme, setTheme] = useState<Theme>(() =>
-    (localStorage.getItem('lebron-theme') as Theme) || 'sixers'
-  );
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem('lebron-theme');
+    return THEMES.includes(saved as Theme) ? (saved as Theme) : 'sixers';
+  });
   const [showTutorial, setShowTutorial] = useState(false);
   const [perfectGame, setPerfectGame] = useState(false);
   const gameStartTime = useRef(0);

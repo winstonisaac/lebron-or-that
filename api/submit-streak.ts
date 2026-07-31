@@ -8,6 +8,8 @@ const BLOCKLIST = [
   'puta', 'nigg3r', 'n1gger', 'nigg@', 'nigg4',
   'biatch', 'biotch', 'chingchong', 'cracker', 'negro',
   'tite', 'titi', 'pussy', 'faggot',
+  'bading', 'bakla', 'bayot', 'duterte', 'du30', 'kupal', 'puke',
+  'tangina', 'deputa', 'bobo', 'ulol', 'chink', 'wanker', 'wank',
 ];
 
 function hasProfanity(name: string): boolean {
@@ -43,6 +45,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (typeof totalQuestions !== 'number' || totalQuestions < 1) {
     return res.status(400).json({ error: 'Invalid total questions' });
+  }
+
+  if (streak > 0 && typeof timeMs !== 'number') {
+    return res.status(400).json({ error: 'Missing timeMs' });
   }
 
   if (typeof timeMs === 'number' && streak > 0) {
