@@ -262,19 +262,30 @@ export default function ResultScreen({
                     return (
                       <div
                         key={i}
-                        className={`flex justify-between px-3 py-2 rounded-lg text-sm transition-all ${
+                        className={`flex items-center justify-between rounded-xl transition-all ${
                           isYou
-                            ? 'bg-sixers-blue/20 border border-sixers-blue/40'
+                            ? 'py-4 px-5 text-white'
                             : i === 0
-                              ? 'bg-amber-400/20 border border-amber-400/40'
+                              ? 'py-4 px-5 text-yellow-900'
                               : i === 1
-                                ? 'bg-gray-300/20 border border-gray-300/30'
+                                ? 'py-4 px-5 text-gray-800'
                                 : i === 2
-                                  ? 'bg-amber-700/20 border border-amber-700/30'
-                                  : 'bg-white/5'
+                                  ? 'py-4 px-5 text-yellow-900'
+                                  : 'py-3 px-4 bg-white/5 border border-white/5 text-white'
                         }`}
+                        style={
+                          isYou
+                            ? { background: 'linear-gradient(to right, var(--color-sixers-blue)22, var(--color-sixers-blue)55, var(--color-sixers-blue)22)', border: '2px solid var(--color-sixers-blue)88' }
+                            : i === 0
+                              ? { background: 'linear-gradient(to right, #B45309, #F59E0B, #B45309)' }
+                              : i === 1
+                                ? { background: 'linear-gradient(to right, #6B7280, #E5E7EB, #6B7280)' }
+                                : i === 2
+                                  ? { background: 'linear-gradient(to right, #78350F, #D97706, #78350F)' }
+                                  : {}
+                        }
                       >
-                        <span className="text-white/80">
+                        <span className={isYou ? 'text-white font-semibold' : 'text-white/80'}>
                           {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`} {entry.player_name}
                         </span>
                         <span className="text-sixers-blue font-bold">{entry.streak}</span>
@@ -283,7 +294,7 @@ export default function ResultScreen({
                   })}
                 </div>
                 {userRank > 20 && (
-                  <div className="mt-4 flex justify-between items-center px-4 py-3 rounded-xl bg-sixers-blue/20 border border-sixers-blue/40 scale-105 shadow-lg">
+                  <div className="mt-4 flex justify-between items-center px-5 py-4 rounded-xl text-white scale-105 shadow-lg" style={{ background: 'linear-gradient(to right, var(--color-sixers-blue)22, var(--color-sixers-blue)55, var(--color-sixers-blue)22)', border: '2px solid var(--color-sixers-blue)88' }}>
                     <span className="text-white font-semibold text-base">#{userRank}: {name.trim()}</span>
                     <span className="text-sixers-blue font-bold text-lg">{streak}</span>
                   </div>
