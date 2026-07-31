@@ -262,7 +262,7 @@ export default function ResultScreen({
                     return (
                       <div
                         key={i}
-                        className={`flex items-center justify-between rounded-xl transition-all ${
+                        className={`flex items-center justify-between rounded-xl relative transition-all ${
                           isYou
                             ? 'py-4 px-5 text-white'
                             : i === 0
@@ -285,6 +285,9 @@ export default function ResultScreen({
                                   : {}
                         }
                       >
+                        {isYou && (
+                          <span className="absolute -top-2 -right-2 bg-white text-[#002B5C] text-[10px] font-bold px-2 py-0.5 rounded-full shadow">YOU</span>
+                        )}
                         <span className={isYou ? 'text-white font-semibold' : 'text-white/80'}>
                           {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`} {entry.player_name}
                         </span>
@@ -294,7 +297,8 @@ export default function ResultScreen({
                   })}
                 </div>
                 {userRank > 20 && (
-                  <div className="mt-4 flex justify-between items-center px-5 py-4 rounded-xl text-white scale-105 shadow-lg" style={{ background: 'linear-gradient(to right, var(--color-sixers-blue)22, var(--color-sixers-blue)55, var(--color-sixers-blue)22)', border: '2px solid rgba(255,255,255,0.9)' }}>
+                  <div className="mt-4 flex justify-between items-center px-5 py-4 rounded-xl text-white scale-105 shadow-lg relative" style={{ background: 'linear-gradient(to right, var(--color-sixers-blue)22, var(--color-sixers-blue)55, var(--color-sixers-blue)22)', border: '2px solid rgba(255,255,255,0.9)' }}>
+                    <span className="absolute -top-2 -right-2 bg-white text-[#002B5C] text-[10px] font-bold px-2 py-0.5 rounded-full shadow">YOU</span>
                     <span className="text-white font-semibold text-base">#{userRank}: {name.trim()}</span>
                     <span className="text-sixers-blue font-bold text-lg">{streak}</span>
                   </div>
