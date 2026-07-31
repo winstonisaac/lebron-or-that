@@ -52,6 +52,10 @@ export default function App() {
   });
   const [showTutorial, setShowTutorial] = useState(false);
   const [perfectGame, setPerfectGame] = useState(false);
+  const [bestStreak, setBestStreak] = useState<number>(() =>
+    Number(localStorage.getItem('lebron-best-streak')) || 0
+  );
+  const [newBest, setNewBest] = useState(false);
   const gameStartTime = useRef(0);
 
   useEffect(() => {
@@ -63,10 +67,15 @@ export default function App() {
     if (!perfectGame) return;
     const t = setTimeout(() => {
       setPerfectGame(false);
+      if (streak > bestStreak) {
+        setBestStreak(streak);
+        localStorage.setItem('lebron-best-streak', String(streak));
+        setNewBest(true);
+      }
       setScreen('result');
     }, 2200);
     return () => clearTimeout(t);
-  }, [perfectGame]);
+  }, [perfectGame, streak, bestStreak]);
 
   const startGame = () => {
     setQuestions(getQuestions());
@@ -98,10 +107,17 @@ export default function App() {
           return i + 1;
         });
       } else {
+        if (streak > bestStreak) {
+          setBestStreak(streak);
+          localStorage.setItem('lebron-best-streak', String(streak));
+          setNewBest(true);
+        } else {
+          setNewBest(false);
+        }
         setScreen('result');
       }
     },
-    [questions.length]
+    [questions.length, streak, bestStreak]
   );
 
   const handleSubmitScore = async (name: string) => {
@@ -132,6 +148,7 @@ export default function App() {
             onLeaderboard={() => { setPrevScreen('start'); setScreen('leaderboard'); }}
             theme={theme}
             onThemeChange={setTheme}
+            bestStreak={bestStreak}
           />
         )}
 
@@ -149,6 +166,7 @@ export default function App() {
           <ResultScreen
             streak={streak}
             totalAnswered={totalAnswered}
+            newBest={newBest}
             onSubmit={handleSubmitScore}
             onPlayAgain={handlePlay}
             onLeaderboard={() => { setPrevScreen('result'); setScreen('leaderboard'); }}

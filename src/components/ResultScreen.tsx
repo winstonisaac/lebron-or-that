@@ -22,6 +22,7 @@ interface LBEntry { player_name: string; streak: number; }
 interface ResultScreenProps {
   streak: number;
   totalAnswered: number;
+  newBest: boolean;
   onSubmit: (name: string) => void;
   onPlayAgain: () => void;
   onLeaderboard: () => void;
@@ -31,6 +32,7 @@ interface ResultScreenProps {
 export default function ResultScreen({
   streak,
   totalAnswered,
+  newBest,
   onSubmit,
   onPlayAgain,
   onLeaderboard,
@@ -205,6 +207,12 @@ export default function ResultScreen({
         <p className="text-sixers-silver text-lg mb-8">
           You got {totalAnswered - 1} right before getting knocked out!
         </p>
+
+        {newBest && (
+          <div className="text-lg font-bold text-amber-400 mb-4 animate-slide-up">
+            🎉 NEW BEST!
+          </div>
+        )}
 
         {streak === 0 ? (
           <div className="mb-8">

@@ -6,9 +6,10 @@ interface StartScreenProps {
   onLeaderboard: () => void;
   theme: string;
   onThemeChange: (theme: 'sixers' | 'cavaliers' | 'lakers' | 'heat') => void;
+  bestStreak: number;
 }
 
-export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChange }: StartScreenProps) {
+export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChange, bestStreak }: StartScreenProps) {
   const [showSettings, setShowSettings] = useState(false);
 
   return (
@@ -26,6 +27,12 @@ export default function StartScreen({ onPlay, onLeaderboard, theme, onThemeChang
         <p className="text-sixers-silver/60 text-sm mb-10">
           LeBron started his NBA career in 2003. Are these things older or younger than his career?
         </p>
+
+        {bestStreak > 0 && (
+          <div className="text-sixers-silver mb-4">
+            Your Best: <span className="text-title-accent font-bold text-lg">🏆 {bestStreak}</span>
+          </div>
+        )}
 
         <button
           onClick={onPlay}
