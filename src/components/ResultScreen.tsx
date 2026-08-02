@@ -112,30 +112,30 @@ export default function ResultScreen({
     const fh = footerImg ? Math.round(W * footerImg.naturalHeight / footerImg.naturalWidth) : 0;
     const midTop = TOP_H;
     const midBottom = H - fh;
-    const midCenter = (midTop + midBottom) / 2;
+    const scoreCenter = (midTop + midBottom) / 2 - 50;
 
-    const boxSize = 331;
-    const boxY = midCenter - boxSize / 2;
+    const boxSize = 298;
+    const boxY = scoreCenter - boxSize / 2;
     ctx.fillStyle = 'rgba(0,0,0,0.25)';
-    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 18);
+    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 16);
     ctx.fill();
     ctx.strokeStyle = 'rgba(255,255,255,0.2)';
     ctx.lineWidth = 2;
-    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 18);
+    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 16);
     ctx.stroke();
 
-    await document.fonts.load('bold 166px "LED Font"');
+    await document.fonts.load('bold 149px "LED Font"');
 
     ctx.shadowColor = `#${accent.replace('#','')}99`;
     ctx.shadowBlur = 40;
     ctx.fillStyle = `#${accent.replace('#','')}`;
-    ctx.font = 'bold 166px "LED Font", monospace';
-    ctx.fillText(String(streak).padStart(2, '0'), W/2, midCenter - 44);
+    ctx.font = 'bold 149px "LED Font", monospace';
+    ctx.fillText(String(streak).padStart(2, '0'), W/2, scoreCenter - 40);
     ctx.shadowBlur = 0;
 
     ctx.fillStyle = 'rgba(255,255,255,0.45)';
-    ctx.font = '40px sans-serif';
-    ctx.fillText('SCORE', W/2, midCenter + 107);
+    ctx.font = '36px sans-serif';
+    ctx.fillText('SCORE', W/2, scoreCenter + 96);
 
     if (footerImg) {
       ctx.drawImage(footerImg, 0, H - fh, W, fh);
