@@ -5,6 +5,7 @@ import GameScreen from './components/GameScreen';
 import ResultScreen from './components/ResultScreen';
 import Leaderboard from './components/Leaderboard';
 import TutorialModal from './components/TutorialModal';
+import { Analytics } from '@vercel/analytics/react';
 import questionsData from './data/questions.json';
 import { decodeYear } from './utils/decode';
 
@@ -215,6 +216,7 @@ export default function App() {
       >
         vibe coded by Winston
       </a>
+      <Analytics />
     </div>
   );
 }
