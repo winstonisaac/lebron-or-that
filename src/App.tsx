@@ -174,6 +174,7 @@ export default function App() {
             totalAnswered={totalAnswered}
             totalQuestions={questions.length}
             newBest={newBest}
+            theme={theme}
             onSubmit={handleSubmitScore}
             onPlayAgain={handlePlay}
             onLeaderboard={() => { setPrevScreen('result'); setScreen('leaderboard'); }}

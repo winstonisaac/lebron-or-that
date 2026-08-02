@@ -17,6 +17,20 @@ function hasProfanity(name: string): boolean {
   return BLOCKLIST.some(word => lower.includes(word));
 }
 
+const THEME_IMAGES: Record<string, string> = {
+  sixers: '/lebron-title-76ers.png',
+  cavaliers: '/lebron-title-cavs.png',
+  lakers: '/lebron-title-lakers.png',
+  heat: '/lebron-title-heat.png',
+};
+
+const THEME_FOOTER_IMAGES: Record<string, string> = {
+  sixers: '/lebron-footer-76ers.png',
+  cavaliers: '/lebron-footer-cavs.png',
+  lakers: '/lebron-footer-lakers.png',
+  heat: '/lebron-footer-heat.png',
+};
+
 interface LBEntry { id: number; player_name: string; streak: number; }
 
 interface ResultScreenProps {
@@ -24,6 +38,7 @@ interface ResultScreenProps {
   totalAnswered: number;
   totalQuestions: number;
   newBest: boolean;
+  theme: string;
   onSubmit: (name: string) => Promise<number | null>;
   onPlayAgain: () => void;
   onLeaderboard: () => void;
@@ -35,6 +50,7 @@ export default function ResultScreen({
   totalAnswered,
   totalQuestions,
   newBest,
+  theme,
   onSubmit,
   onPlayAgain,
   onLeaderboard,
@@ -48,15 +64,20 @@ export default function ResultScreen({
   const [loadingLB, setLoadingLB] = useState(false);
   const [myEntryId, setMyEntryId] = useState<number | null>(null);
   const [titleImg, setTitleImg] = useState<HTMLImageElement | null>(null);
+  const [footerImg, setFooterImg] = useState<HTMLImageElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const theme = document.documentElement.dataset.theme || 'sixers';
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.src = `/lebron-title-${theme}.png`;
-    img.onload = () => setTitleImg(img);
-  }, []);
+    const title = new Image();
+    title.crossOrigin = 'anonymous';
+    title.src = THEME_IMAGES[theme] || THEME_IMAGES.sixers;
+    title.onload = () => setTitleImg(title);
+
+    const footer = new Image();
+    footer.crossOrigin = 'anonymous';
+    footer.src = THEME_FOOTER_IMAGES[theme] || THEME_FOOTER_IMAGES.sixers;
+    footer.onload = () => setFooterImg(footer);
+  }, [theme]);
 
   async function generateScoreCard(canvas: HTMLCanvasElement) {
     const ctx = canvas.getContext('2d')!;
@@ -65,7 +86,6 @@ export default function ResultScreen({
     const style = getComputedStyle(document.documentElement);
     const bg1 = style.getPropertyValue('--color-sixers-navy').trim() || '#002B5C';
     const accent = style.getPropertyValue('--color-title-accent').trim() || '#ED174C';
-    const accent2 = style.getPropertyValue('--color-sixers-blue').trim() || '#006BB6';
 
     const grad = ctx.createLinearGradient(0, 0, 0, H);
     grad.addColorStop(0, `#${bg1.replace('#','')}`);
@@ -108,24 +128,12 @@ export default function ResultScreen({
     ctx.font = '12px sans-serif';
     ctx.fillText('SCORE', W/2, 337);
 
-    // Bottom bar
-    ctx.fillStyle = `#${accent2.replace('#','')}`;
-    ctx.globalAlpha = 0.15;
-    drawRoundRect(ctx, 15, 490, W-30, 100, 14);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = `#${accent2.replace('#','')}40`;
-    ctx.lineWidth = 1;
-    drawRoundRect(ctx, 15, 490, W-30, 100, 14);
-    ctx.stroke();
-
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.font = '700 16px sans-serif';
-    ctx.fillText('Can you beat my score?', W/2, 530);
-
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
-    ctx.font = '13px sans-serif';
-    ctx.fillText('lebron-or-that.vercel.app', W/2, 560);
+    // Footer image
+    if (footerImg) {
+      const fw = W - 30;
+      const fh = Math.round(fw * footerImg.naturalHeight / footerImg.naturalWidth);
+      ctx.drawImage(footerImg, 15, H - fh - 10, fw, fh);
+    }
   }
 
   function drawRoundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
