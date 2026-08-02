@@ -94,10 +94,6 @@ export default function ResultScreen({
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    ctx.save();
-    drawRoundRect(ctx, 0, 0, W, H, 50);
-    ctx.clip();
-
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
@@ -105,7 +101,7 @@ export default function ResultScreen({
       ctx.save();
       const tw = 530, th = Math.round(tw * 347 / 640);
       const tx = (W - tw) / 2;
-      const ty = (TOP_H - th) / 2;
+      const ty = (TOP_H - th) / 2 + 50;
       ctx.beginPath();
       drawRoundRect(ctx, tx, ty, tw, th, 27);
       ctx.clip();
@@ -118,7 +114,7 @@ export default function ResultScreen({
     const midBottom = H - fh;
     const midCenter = (midTop + midBottom) / 2;
 
-    const boxSize = 282;
+    const boxSize = 414;
     const boxY = midCenter - boxSize / 2;
     ctx.fillStyle = 'rgba(0,0,0,0.25)';
     drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 23);
@@ -134,18 +130,16 @@ export default function ResultScreen({
     ctx.shadowBlur = 40;
     ctx.fillStyle = `#${accent.replace('#','')}`;
     ctx.font = 'bold 166px "LED Font", monospace';
-    ctx.fillText(String(streak).padStart(2, '0'), W/2, midCenter - 34);
+    ctx.fillText(String(streak).padStart(2, '0'), W/2, midCenter - 44);
     ctx.shadowBlur = 0;
 
     ctx.fillStyle = 'rgba(255,255,255,0.45)';
-    ctx.font = '20px sans-serif';
+    ctx.font = '40px sans-serif';
     ctx.fillText('SCORE', W/2, midCenter + 107);
 
     if (footerImg) {
       ctx.drawImage(footerImg, 0, H - fh, W, fh);
     }
-
-    ctx.restore();
   }
 
   function drawRoundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
