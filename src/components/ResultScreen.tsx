@@ -114,14 +114,14 @@ export default function ResultScreen({
     const midBottom = H - fh;
     const midCenter = (midTop + midBottom) / 2;
 
-    const boxSize = 414;
+    const boxSize = 331;
     const boxY = midCenter - boxSize / 2;
     ctx.fillStyle = 'rgba(0,0,0,0.25)';
-    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 23);
+    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 18);
     ctx.fill();
     ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-    ctx.lineWidth = 1;
-    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 23);
+    ctx.lineWidth = 2;
+    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 18);
     ctx.stroke();
 
     await document.fonts.load('bold 166px "LED Font"');
