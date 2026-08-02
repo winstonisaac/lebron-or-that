@@ -81,7 +81,8 @@ export default function ResultScreen({
 
   async function generateScoreCard(canvas: HTMLCanvasElement) {
     const ctx = canvas.getContext('2d')!;
-    const W = 600, H = 600;
+    const W = 1000, H = 1000;
+    const TOP_H = 420;
 
     const style = getComputedStyle(document.documentElement);
     const bg1 = style.getPropertyValue('--color-sixers-navy').trim() || '#002B5C';
@@ -98,41 +99,46 @@ export default function ResultScreen({
 
     if (titleImg) {
       ctx.save();
-      const tw = 360, th = Math.round(360 * 347 / 640);
+      const tw = 530, th = Math.round(tw * 347 / 640);
+      const tx = (W - tw) / 2;
+      const ty = (TOP_H - th) / 2;
       ctx.beginPath();
-      drawRoundRect(ctx, (W-tw)/2, 15, tw, th, 16);
+      drawRoundRect(ctx, tx, ty, tw, th, 27);
       ctx.clip();
-      ctx.drawImage(titleImg, (W-tw)/2, 15, tw, th);
+      ctx.drawImage(titleImg, tx, ty, tw, th);
       ctx.restore();
     }
 
-    // Score container
+    const fh = footerImg ? Math.round(W * footerImg.naturalHeight / footerImg.naturalWidth) : 0;
+    const midTop = TOP_H;
+    const midBottom = H - fh;
+    const midCenter = (midTop + midBottom) / 2;
+
+    const boxSize = 183;
+    const boxY = midCenter - boxSize / 2;
     ctx.fillStyle = 'rgba(0,0,0,0.25)';
-    drawRoundRect(ctx, W/2-55, 245, 110, 110, 14);
+    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 23);
     ctx.fill();
     ctx.strokeStyle = 'rgba(255,255,255,0.08)';
     ctx.lineWidth = 1;
-    drawRoundRect(ctx, W/2-55, 245, 110, 110, 14);
+    drawRoundRect(ctx, W/2 - boxSize/2, boxY, boxSize, boxSize, 23);
     ctx.stroke();
 
-    await document.fonts.load('bold 50px "LED Font"');
+    await document.fonts.load('bold 83px "LED Font"');
 
     ctx.shadowColor = `#${accent.replace('#','')}99`;
-    ctx.shadowBlur = 20;
+    ctx.shadowBlur = 33;
     ctx.fillStyle = `#${accent.replace('#','')}`;
-    ctx.font = 'bold 50px "LED Font", monospace';
-    ctx.fillText(String(streak).padStart(2, '0'), W/2, 280);
+    ctx.font = 'bold 83px "LED Font", monospace';
+    ctx.fillText(String(streak).padStart(2, '0'), W/2, midCenter - 8);
     ctx.shadowBlur = 0;
 
     ctx.fillStyle = 'rgba(255,255,255,0.45)';
-    ctx.font = '12px sans-serif';
-    ctx.fillText('SCORE', W/2, 337);
+    ctx.font = '20px sans-serif';
+    ctx.fillText('SCORE', W/2, midCenter + 58);
 
-    // Footer image
     if (footerImg) {
-      const fw = W - 30;
-      const fh = Math.round(fw * footerImg.naturalHeight / footerImg.naturalWidth);
-      ctx.drawImage(footerImg, 15, H - fh - 10, fw, fh);
+      ctx.drawImage(footerImg, 0, H - fh, W, fh);
     }
   }
 
@@ -347,7 +353,7 @@ export default function ResultScreen({
           </div>
         </div>
 
-        <canvas ref={canvasRef} width="600" height="600" style={{ display: 'none' }} />
+        <canvas ref={canvasRef} width="1000" height="1000" style={{ display: 'none' }} />
       </div>
     </div>
   );
